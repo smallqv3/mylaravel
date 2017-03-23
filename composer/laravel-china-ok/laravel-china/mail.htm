@@ -1,0 +1,642 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Laravel 5.1 中文文档：邮件
+</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="author" content="@summerblue">
+	<meta name="description" content="邮件,简介,发送邮件,附件,内部附件,队列邮件,邮件与本地开发,事件,简介,Laravel 基于热门的 SwiftMailer 函数库提供了一个简洁的 API。Laravel 为 SMTP、Mailgun、Mandrill、Amazon SES、PHP 的 mail 函数及 sendmail 提供驱动，让你可以快速地从所选择的本地或云端服务开始发送邮件。,驱动前提,基于 API 的驱动，例如 Ma...
+">
+	<meta name="keywords" content="邮件,laravel5.1文档,laravel5.1中文文档,laravel中国,laravel中文,laravel框架中文,laravel文档,laravel框架中国,laravel中文文档
+">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--[if lte IE 9]>
+		<script src="html5shiv.min.js" tppabs="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="laravel.css" tppabs="http://laravel-china.org/assets/css/laravel.css">
+	<style media="screen">
+		div.main-content {
+		  display: none;
+		}
+		.loading-effect {
+			position: fixed;
+			left: 50%;
+			top:300px;
+		    z-index: -1;
+		}
+	</style>
+</head>
+<body class="docs language-php ">
+
+	<span class="overlay"></span>
+
+	<div class="loading-effect">
+		<div class="loader-inner line-scale">
+		      <div></div>
+		      <div></div>
+		      <div></div>
+		      <div></div>
+		      <div></div>
+		  </div>
+	</div>
+
+
+	<div class="main-content">
+
+		<nav class="main">
+			<div class="container">
+				<a href="javascript:if(confirm('http://laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/'" tppabs="http://laravel-china.org/" class="brand">
+					<img src="laravel-logo.png" tppabs="http://laravel-china.org/assets/img/laravel-logo.png" height="30">
+					Laravel
+				</a>
+
+				<div class="responsive-sidebar-nav">
+					<a href="#" class="toggle-slide menu-link btn">&#9776;</a>
+				</div>
+
+									<div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			<!--<span class="faint">v</span> -->
+			5.1
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="mail.htm" tppabs="http://laravel-china.org/docs/5.1/mail">5.1</a>
+				</li>
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="mail-1.htm" tppabs="http://laravel-china.org/docs/4.2/mail">4.2</a>
+				</li>
+					</ul>
+	</div>
+</div>
+				
+				<ul class="main-nav">
+					<li class="nav-docs"><a href="javascript:if(confirm('http://laravel-china.org/docs  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/docs'" tppabs="http://laravel-china.org/docs">文档</a></li>
+<li class="nav-laracasts"><a href="javascript:if(confirm('https://laracasts.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://laracasts.com/'" tppabs="https://laracasts.com/" target="_blank">Laracasts</a></li>
+<li class="nav-docs"><a href="javascript:if(confirm('http://lumen.laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://lumen.laravel-china.org/'" tppabs="http://lumen.laravel-china.org/">Lumen</a></li>
+<li class="nav-forge"><a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">Laravel LTS 速查表</a></li>
+<li class="dropdown">
+	<a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">Laravel 社区</a>
+</li>
+				</ul>
+			</div>
+		</nav>
+
+		<nav id="slide-menu" class="slide-menu" role="navigation">
+
+	<div class="brand">
+		<a href="javascript:if(confirm('http://laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/'" tppabs="http://laravel-china.org/">
+			<img src="laravel-logo-white.png" tppabs="http://laravel-china.org/assets/img/laravel-logo-white.png" height="50">
+		</a>
+	</div>
+
+	<ul class="slide-main-nav">
+		<li><a href="javascript:if(confirm('http://laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/'" tppabs="http://laravel-china.org/">Home</a></li>
+		<li class="nav-docs"><a href="javascript:if(confirm('http://laravel-china.org/docs  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/docs'" tppabs="http://laravel-china.org/docs">文档</a></li>
+<li class="nav-laracasts"><a href="javascript:if(confirm('https://laracasts.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://laracasts.com/'" tppabs="https://laracasts.com/" target="_blank">Laracasts</a></li>
+<li class="nav-docs"><a href="javascript:if(confirm('http://lumen.laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://lumen.laravel-china.org/'" tppabs="http://lumen.laravel-china.org/">Lumen</a></li>
+<li class="nav-forge"><a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">Laravel LTS 速查表</a></li>
+<li class="dropdown">
+	<a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">Laravel 社区</a>
+</li>
+	</ul>
+
+	<div class="slide-docs-nav">
+		<h2>文档</h2>
+
+		<a type="button" class="turnofflight"><i class="fa fa-lightbulb-o"></i> 夜间模式 </a>
+		<br>
+		<a class="turnofflight" href="javascript:if(confirm('https://phphub.org/topics/2095  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/topics/2095'" tppabs="https://phphub.org/topics/2095"><i class="fa fa-bug"></i> 提交勘误 </a>
+		<ul>
+<li>前言
+<ul>
+<li><a href="about.htm" tppabs="http://laravel-china.org/docs/5.1/about">翻译说明</a></li>
+<li><a href="releases.htm" tppabs="http://laravel-china.org/docs/5.1/releases">发行说明</a></li>
+<li><a href="upgrade.htm" tppabs="http://laravel-china.org/docs/5.1/upgrade">升级导引</a></li>
+<li><a href="contributions.htm" tppabs="http://laravel-china.org/docs/5.1/contributions">贡献导引</a></li>
+<li><a href="javascript:if(confirm('http://laravel-china.org/api/5.1  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/api/5.1'" tppabs="http://laravel-china.org/api/5.1">API 文档</a></li>
+</ul></li>
+<li>环境配置
+<ul>
+<li><a href="installation.htm" tppabs="http://laravel-china.org/docs/5.1/installation">安装</a></li>
+<li><a href="homestead.htm" tppabs="http://laravel-china.org/docs/5.1/homestead">Homestead</a></li>
+</ul></li>
+<li>基本功能
+<ul>
+<li><a href="routing.htm" tppabs="http://laravel-china.org/docs/5.1/routing">路由</a></li>
+<li><a href="middleware.htm" tppabs="http://laravel-china.org/docs/5.1/middleware">中间件</a></li>
+<li><a href="controllers.htm" tppabs="http://laravel-china.org/docs/5.1/controllers">控制器</a></li>
+<li><a href="requests.htm" tppabs="http://laravel-china.org/docs/5.1/requests">请求</a></li>
+<li><a href="responses.htm" tppabs="http://laravel-china.org/docs/5.1/responses">响应</a></li>
+<li><a href="views.htm" tppabs="http://laravel-china.org/docs/5.1/views">视图</a></li>
+<li><a href="blade.htm" tppabs="http://laravel-china.org/docs/5.1/blade">Blade 模板</a></li>
+</ul></li>
+<li>教程
+<ul>
+<li><a href="quickstart.htm" tppabs="http://laravel-china.org/docs/5.1/quickstart">初级任务清单</a></li>
+<li><a href="quickstart-intermediate.htm" tppabs="http://laravel-china.org/docs/5.1/quickstart-intermediate">中级任务清单</a></li>
+</ul></li>
+<li>系统架构
+<ul>
+<li><a href="lifecycle.htm" tppabs="http://laravel-china.org/docs/5.1/lifecycle">请求的生命周期</a></li>
+<li><a href="structure.htm" tppabs="http://laravel-china.org/docs/5.1/structure">应用程序结构</a></li>
+<li><a href="providers.htm" tppabs="http://laravel-china.org/docs/5.1/providers">服务提供者</a></li>
+<li><a href="container.htm" tppabs="http://laravel-china.org/docs/5.1/container">服务容器</a></li>
+<li><a href="contracts.htm" tppabs="http://laravel-china.org/docs/5.1/contracts">Contracts</a></li>
+<li><a href="facades.htm" tppabs="http://laravel-china.org/docs/5.1/facades">Facades</a></li>
+</ul></li>
+<li>系统服务
+<ul>
+<li><a href="authentication.htm" tppabs="http://laravel-china.org/docs/5.1/authentication">用户认证</a></li>
+<li><a href="authorization.htm" tppabs="http://laravel-china.org/docs/5.1/authorization">用户授权</a></li>
+<li><a href="artisan.htm" tppabs="http://laravel-china.org/docs/5.1/artisan">Artisan 命令行</a></li>
+<li><a href="billing.htm" tppabs="http://laravel-china.org/docs/5.1/billing">交易</a></li>
+<li><a href="cache.htm" tppabs="http://laravel-china.org/docs/5.1/cache">缓存</a></li>
+<li><a href="collections.htm" tppabs="http://laravel-china.org/docs/5.1/collections">集合</a></li>
+<li><a href="elixir.htm" tppabs="http://laravel-china.org/docs/5.1/elixir">Elixir</a></li>
+<li><a href="encryption.htm" tppabs="http://laravel-china.org/docs/5.1/encryption">加密与解密</a></li>
+<li><a href="errors.htm" tppabs="http://laravel-china.org/docs/5.1/errors">错误与日志</a></li>
+<li><a href="events.htm" tppabs="http://laravel-china.org/docs/5.1/events">事件</a></li>
+<li><a href="filesystem.htm" tppabs="http://laravel-china.org/docs/5.1/filesystem">文件系统与云存储</a></li>
+<li><a href="hashing.htm" tppabs="http://laravel-china.org/docs/5.1/hashing">哈希</a></li>
+<li><a href="helpers.htm" tppabs="http://laravel-china.org/docs/5.1/helpers">辅助函数</a></li>
+<li><a href="localization.htm" tppabs="http://laravel-china.org/docs/5.1/localization">本地化</a></li>
+<li><a href="mail.htm" tppabs="http://laravel-china.org/docs/5.1/mail">邮件</a></li>
+<li><a href="packages.htm" tppabs="http://laravel-china.org/docs/5.1/packages">扩展包开发</a></li>
+<li><a href="pagination.htm" tppabs="http://laravel-china.org/docs/5.1/pagination">分页</a></li>
+<li><a href="queues.htm" tppabs="http://laravel-china.org/docs/5.1/queues">队列</a></li>
+<li><a href="redis.htm" tppabs="http://laravel-china.org/docs/5.1/redis">Redis</a></li>
+<li><a href="session.htm" tppabs="http://laravel-china.org/docs/5.1/session">Session</a></li>
+<li><a href="envoy.htm" tppabs="http://laravel-china.org/docs/5.1/envoy">Envoy</a></li>
+<li><a href="scheduling.htm" tppabs="http://laravel-china.org/docs/5.1/scheduling">任务调度</a></li>
+<li><a href="testing.htm" tppabs="http://laravel-china.org/docs/5.1/testing">测试</a></li>
+<li><a href="validation.htm" tppabs="http://laravel-china.org/docs/5.1/validation">表单验证</a></li>
+</ul></li>
+<li>数据库
+<ul>
+<li><a href="database.htm" tppabs="http://laravel-china.org/docs/5.1/database">入门</a></li>
+<li><a href="queries.htm" tppabs="http://laravel-china.org/docs/5.1/queries">查询构造器</a></li>
+<li><a href="migrations.htm" tppabs="http://laravel-china.org/docs/5.1/migrations">数据库迁移</a></li>
+<li><a href="seeding.htm" tppabs="http://laravel-china.org/docs/5.1/seeding">数据填充</a></li>
+</ul></li>
+<li>Eloquent ORM
+<ul>
+<li><a href="eloquent.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent">入门</a></li>
+<li><a href="eloquent-relationships.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-relationships">模型关联</a></li>
+<li><a href="eloquent-collections.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-collections">Eloquent 集合</a></li>
+<li><a href="eloquent-mutators.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-mutators">Getter/Setter</a></li>
+<li><a href="eloquent-serialization.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-serialization">序列化</a></li>
+</ul></li>
+</ul>
+
+		<hr>
+		新手 QQ 群：579866868
+	</div>
+
+</nav>
+
+<div class="docs-wrapper container">
+
+	<section class="sidebar">
+
+		<div class="header">
+			<a type="button" class="btn btn-primary btn-lg btn-block turnofflight"><i class="fa fa-lightbulb-o"></i> 夜间模式 </a>
+			<a class="btn btn-primary btn-lg btn-block " href="javascript:if(confirm('https://phphub.org/topics/2095  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/topics/2095'" tppabs="https://phphub.org/topics/2095"><i class="fa fa-bug"></i> 提交勘误 </a>
+		</div>
+
+		<ul>
+<li>前言
+<ul>
+<li><a href="about.htm" tppabs="http://laravel-china.org/docs/5.1/about">翻译说明</a></li>
+<li><a href="releases.htm" tppabs="http://laravel-china.org/docs/5.1/releases">发行说明</a></li>
+<li><a href="upgrade.htm" tppabs="http://laravel-china.org/docs/5.1/upgrade">升级导引</a></li>
+<li><a href="contributions.htm" tppabs="http://laravel-china.org/docs/5.1/contributions">贡献导引</a></li>
+<li><a href="javascript:if(confirm('http://laravel-china.org/api/5.1  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/api/5.1'" tppabs="http://laravel-china.org/api/5.1">API 文档</a></li>
+</ul></li>
+<li>环境配置
+<ul>
+<li><a href="installation.htm" tppabs="http://laravel-china.org/docs/5.1/installation">安装</a></li>
+<li><a href="homestead.htm" tppabs="http://laravel-china.org/docs/5.1/homestead">Homestead</a></li>
+</ul></li>
+<li>基本功能
+<ul>
+<li><a href="routing.htm" tppabs="http://laravel-china.org/docs/5.1/routing">路由</a></li>
+<li><a href="middleware.htm" tppabs="http://laravel-china.org/docs/5.1/middleware">中间件</a></li>
+<li><a href="controllers.htm" tppabs="http://laravel-china.org/docs/5.1/controllers">控制器</a></li>
+<li><a href="requests.htm" tppabs="http://laravel-china.org/docs/5.1/requests">请求</a></li>
+<li><a href="responses.htm" tppabs="http://laravel-china.org/docs/5.1/responses">响应</a></li>
+<li><a href="views.htm" tppabs="http://laravel-china.org/docs/5.1/views">视图</a></li>
+<li><a href="blade.htm" tppabs="http://laravel-china.org/docs/5.1/blade">Blade 模板</a></li>
+</ul></li>
+<li>教程
+<ul>
+<li><a href="quickstart.htm" tppabs="http://laravel-china.org/docs/5.1/quickstart">初级任务清单</a></li>
+<li><a href="quickstart-intermediate.htm" tppabs="http://laravel-china.org/docs/5.1/quickstart-intermediate">中级任务清单</a></li>
+</ul></li>
+<li>系统架构
+<ul>
+<li><a href="lifecycle.htm" tppabs="http://laravel-china.org/docs/5.1/lifecycle">请求的生命周期</a></li>
+<li><a href="structure.htm" tppabs="http://laravel-china.org/docs/5.1/structure">应用程序结构</a></li>
+<li><a href="providers.htm" tppabs="http://laravel-china.org/docs/5.1/providers">服务提供者</a></li>
+<li><a href="container.htm" tppabs="http://laravel-china.org/docs/5.1/container">服务容器</a></li>
+<li><a href="contracts.htm" tppabs="http://laravel-china.org/docs/5.1/contracts">Contracts</a></li>
+<li><a href="facades.htm" tppabs="http://laravel-china.org/docs/5.1/facades">Facades</a></li>
+</ul></li>
+<li>系统服务
+<ul>
+<li><a href="authentication.htm" tppabs="http://laravel-china.org/docs/5.1/authentication">用户认证</a></li>
+<li><a href="authorization.htm" tppabs="http://laravel-china.org/docs/5.1/authorization">用户授权</a></li>
+<li><a href="artisan.htm" tppabs="http://laravel-china.org/docs/5.1/artisan">Artisan 命令行</a></li>
+<li><a href="billing.htm" tppabs="http://laravel-china.org/docs/5.1/billing">交易</a></li>
+<li><a href="cache.htm" tppabs="http://laravel-china.org/docs/5.1/cache">缓存</a></li>
+<li><a href="collections.htm" tppabs="http://laravel-china.org/docs/5.1/collections">集合</a></li>
+<li><a href="elixir.htm" tppabs="http://laravel-china.org/docs/5.1/elixir">Elixir</a></li>
+<li><a href="encryption.htm" tppabs="http://laravel-china.org/docs/5.1/encryption">加密与解密</a></li>
+<li><a href="errors.htm" tppabs="http://laravel-china.org/docs/5.1/errors">错误与日志</a></li>
+<li><a href="events.htm" tppabs="http://laravel-china.org/docs/5.1/events">事件</a></li>
+<li><a href="filesystem.htm" tppabs="http://laravel-china.org/docs/5.1/filesystem">文件系统与云存储</a></li>
+<li><a href="hashing.htm" tppabs="http://laravel-china.org/docs/5.1/hashing">哈希</a></li>
+<li><a href="helpers.htm" tppabs="http://laravel-china.org/docs/5.1/helpers">辅助函数</a></li>
+<li><a href="localization.htm" tppabs="http://laravel-china.org/docs/5.1/localization">本地化</a></li>
+<li><a href="mail.htm" tppabs="http://laravel-china.org/docs/5.1/mail">邮件</a></li>
+<li><a href="packages.htm" tppabs="http://laravel-china.org/docs/5.1/packages">扩展包开发</a></li>
+<li><a href="pagination.htm" tppabs="http://laravel-china.org/docs/5.1/pagination">分页</a></li>
+<li><a href="queues.htm" tppabs="http://laravel-china.org/docs/5.1/queues">队列</a></li>
+<li><a href="redis.htm" tppabs="http://laravel-china.org/docs/5.1/redis">Redis</a></li>
+<li><a href="session.htm" tppabs="http://laravel-china.org/docs/5.1/session">Session</a></li>
+<li><a href="envoy.htm" tppabs="http://laravel-china.org/docs/5.1/envoy">Envoy</a></li>
+<li><a href="scheduling.htm" tppabs="http://laravel-china.org/docs/5.1/scheduling">任务调度</a></li>
+<li><a href="testing.htm" tppabs="http://laravel-china.org/docs/5.1/testing">测试</a></li>
+<li><a href="validation.htm" tppabs="http://laravel-china.org/docs/5.1/validation">表单验证</a></li>
+</ul></li>
+<li>数据库
+<ul>
+<li><a href="database.htm" tppabs="http://laravel-china.org/docs/5.1/database">入门</a></li>
+<li><a href="queries.htm" tppabs="http://laravel-china.org/docs/5.1/queries">查询构造器</a></li>
+<li><a href="migrations.htm" tppabs="http://laravel-china.org/docs/5.1/migrations">数据库迁移</a></li>
+<li><a href="seeding.htm" tppabs="http://laravel-china.org/docs/5.1/seeding">数据填充</a></li>
+</ul></li>
+<li>Eloquent ORM
+<ul>
+<li><a href="eloquent.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent">入门</a></li>
+<li><a href="eloquent-relationships.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-relationships">模型关联</a></li>
+<li><a href="eloquent-collections.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-collections">Eloquent 集合</a></li>
+<li><a href="eloquent-mutators.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-mutators">Getter/Setter</a></li>
+<li><a href="eloquent-serialization.htm" tppabs="http://laravel-china.org/docs/5.1/eloquent-serialization">序列化</a></li>
+</ul></li>
+</ul>
+
+		<hr>
+		新手 QQ 群：579866868
+	</section>
+
+	<article>
+
+		<div id="custom-search-input">
+			<form id="search-form" action="https://www.bing.com/search?q=site:laravel-china.org" method="get">
+				<div class="input-group col-md-12">
+					<input type="text" class="search-query form-control" name="keyword" placeholder="搜索关键词" />
+					<span class="input-group-btn">
+						<button class="btn btn-danger" type="button" id="search-btn">
+							<i class=" fa fa-search"></i>
+						</button>
+					</span>
+				</div>
+			</form>
+        </div>
+
+		<div class="alert alert-warning" role="alert">
+
+			<h4>拥抱 Laravel 5.1 LTS</h4>
+			<p>
+				强烈建议在 2018 年之前使用 Laravel 5.1 来构建项目，Laravel 5.1 是 LTS 的发行版本, 发行于 2015 年 6 月份，自发布起提供两年时间的 Bug 修复（2017 年 6 月）, 3 年时间的安全修复（2018 年 6 月）。
+			</p>
+			 <p>
+			 	LTS 版本是此项目能提供的最长时间维护版本。一般的发行版本, 只提供 6 个月的 Bug 修复支持, 一年的安全修复支持.
+			 </p>
+		</div>
+
+		<div class="main-content">
+			<h1>邮件</h1>
+<ul>
+<li><a href="#introduction">简介</a></li>
+<li><a href="#sending-mail">发送邮件</a>
+<ul>
+<li><a href="#attachments">附件</a></li>
+<li><a href="#inline-attachments">内部附件</a></li>
+<li><a href="#queueing-mail">队列邮件</a></li>
+</ul></li>
+<li><a href="#mail-and-local-development">邮件与本地开发</a></li>
+<li><a href="#events">事件</a></li>
+</ul>
+<p><a name="introduction"></a></p>
+<h2>简介</h2>
+<p>Laravel 基于热门的 <a href="javascript:if(confirm('http://swiftmailer.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://swiftmailer.org/'" tppabs="http://swiftmailer.org/">SwiftMailer</a> 函数库提供了一个简洁的 API。Laravel 为 SMTP、Mailgun、Mandrill、Amazon SES、PHP 的 <code>mail</code> 函数及 <code>sendmail</code> 提供驱动，让你可以快速地从所选择的本地或云端服务开始发送邮件。</p>
+<h3>驱动前提</h3>
+<p>基于 API 的驱动，例如 Mailgun 或 Mandrill，通常比 SMTP 服务器更简单快速。所有的 API 驱动都需要在应用程序中安装 Guzzle HTTP 函数库。你可在 <code>composer.json</code> 文件中加入下面这一行，以便于在项目中安装 Guzzle：</p>
+<pre><code>"guzzlehttp/guzzle": "~5.3|~6.0"</code></pre>
+<h4>Mailgun 驱动</h4>
+<p>要使用 Mailgun 驱动，首先必须安装 Guzzle，之后将 <code>config/mail.php</code> 配置文件中的 <code>driver</code> 选项设置为 <code>mailgun</code>。接下来，确认 <code>config/services.php</code> 配置文件包含下列选项：</p>
+<pre><code>'mailgun' =&gt; [
+    'domain' =&gt; 'your-mailgun-domain',
+    'secret' =&gt; 'your-mailgun-key',
+],</code></pre>
+<h4>Mandrill 驱动</h4>
+<p>要使用 Mandrill 驱动，首先必须安装 Guzzle，之后将 <code>config/mail.php</code> 配置文件中的 <code>driver</code> 选项设置为 <code>mandrill</code>。接下来，确认 <code>config/services.php</code> 配置文件包含下列选项：</p>
+<pre><code>'mandrill' =&gt; [
+    'secret' =&gt; 'your-mandrill-key',
+],</code></pre>
+<h4>SES 驱动</h4>
+<p>要使用 Amazon SES 驱动，必须安装 PHP 的 Amazon AWS SDK。你可在 <code>composer.json</code> 文件的 <code>require</code> 段落加入下面这一行以安装此函数库：</p>
+<pre><code>"aws/aws-sdk-php": "~3.0"</code></pre>
+<p>接下来，将 <code>config/mail.php</code> 配置文件中的 <code>driver</code> 选项设置为 <code>ses</code>。然后确认 <code>config/services.php</code> 配置文件包含下列选项：</p>
+<pre><code>'ses' =&gt; [
+    'key' =&gt; 'your-ses-key',
+    'secret' =&gt; 'your-ses-secret',
+    'region' =&gt; 'ses-region',  // 例如 us-east-1
+],</code></pre>
+<p><a name="sending-mail"></a></p>
+<h2>发送邮件</h2>
+<p>Laravel 允许你在 <a href="views.htm" tppabs="http://laravel-china.org/docs/5.1/views">视图</a> 中存放电子邮件消息。例如，要组织你的电子邮件，你可以在 <code>resource/views</code> 目录中创建 <code>emails</code> 目录：</p>
+<p>要发送消息，使用 <code>Mail</code> <a href="facades.htm" tppabs="http://laravel-china.org/docs/5.1/facades">facade</a> 的 <code>send</code> 方法。<code>send</code> 方法接收三个参数。首先是包含邮件消息的 <a href="views.htm" tppabs="http://laravel-china.org/docs/5.1/views">视图</a> 名称。其次是一个要传递给该视图的数据数组。最后是一个用来接收消息实例的 <code>闭包</code>回调，让你可以自定义收件者、主题，以及邮件消息的其它部分：</p>
+<pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use Mail;
+use App\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
+class UserController extends Controller
+{
+    /**
+     * 发封电子邮件提醒给用户。
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function sendEmailReminder(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        Mail::send('emails.reminder', ['user' =&gt; $user], function ($m) use ($user) {
+            $m-&gt;from('hello@app.com', 'Your Application');
+
+            $m-&gt;to($user-&gt;email, $user-&gt;name)-&gt;subject('Your Reminder!');
+        });
+    }
+}</code></pre>
+<p>在上面的例子中，我们传了包含 <code>user</code> 键的数组，因此可以使用下列的 PHP 代码，在邮件视图中显示用户名：</p>
+<pre><code>&lt;?php echo $user-&gt;name; ?&gt;</code></pre>
+<blockquote>
+<p><strong>注意：</strong><code>$message</code> 变量永远会被传递至电子邮件视图，且允许 <a href="#attachments">内部嵌入附件</a>。因此，你应该避免将 <code>message</code> 变量传至视图。</p>
+</blockquote>
+<h4>创建消息</h4>
+<p>如之前讨论过的，传给 <code>send</code> 方法的第三个参数是一个<code>闭包</code>，让你可以对电子邮件消息自身指定不同的选项。使用此闭包，你可以指定消息的其它属性，例如副本、密件副本等等：</p>
+<pre><code>Mail::send('emails.welcome', $data, function ($message) {
+    $message-&gt;from('us@example.com', 'Laravel');
+
+    $message-&gt;to('foo@example.com')-&gt;cc('bar@example.com');
+});</code></pre>
+<p>这是一份在 <code>$message</code> 消息生成器实例中可以使用的方法清单：</p>
+<pre><code>$message-&gt;from($address, $name = null);
+$message-&gt;sender($address, $name = null);
+$message-&gt;to($address, $name = null);
+$message-&gt;cc($address, $name = null);
+$message-&gt;bcc($address, $name = null);
+$message-&gt;replyTo($address, $name = null);
+$message-&gt;subject($subject);
+$message-&gt;priority($level);
+$message-&gt;attach($pathToFile, array $options = []);
+
+// 以原始 $data 字符串附加一个文件...
+$message-&gt;attachData($data, $name, array $options = []);
+
+// 获取底层的 SwiftMailer 消息实例...
+$message-&gt;getSwiftMessage();</code></pre>
+<blockquote>
+<p><strong>注意：</strong>传递至 <code>Mail::send</code> 闭包的消息实例继承了 SwiftMailer 消息类，让你可以调用该类的任何方法来创建你的电子邮件消息。</p>
+</blockquote>
+<h4>发送纯文本</h4>
+<p>传给 <code>send</code> 方法的视图，在默认情况下会假定它包含了 HTML。然而，通过传递数组作为 <code>send</code> 方法的第一个参数，除了 HTML 视图之外，你还可以同时指定发送纯文本视图：</p>
+<pre><code>Mail::send(['html.view', 'text.view'], $data, $callback);</code></pre>
+<p>或者，若你只需要发送纯文本电子邮件，则可以在数组中使用 <code>text</code> 键来指定：</p>
+<pre><code>Mail::send(['text' =&gt; 'view'], $data, $callback);</code></pre>
+<h4>发送原始字符串</h4>
+<p>若你希望直接发送原始字符串，则可以使用 <code>raw</code> 方法：</p>
+<pre><code>Mail::raw('Text to e-mail', function ($message) {
+    //
+});</code></pre>
+<p><a name="attachments"></a></p>
+<h3>附件</h3>
+<p>要在电子邮件中加入附件，可在传递给闭包的 <code>$message</code> 对象上使用 <code>attach</code> 方法。<code>attach</code> 方法接受文件的完整路径作为它的第一个参数：</p>
+<pre><code>Mail::send('emails.welcome', $data, function ($message) {
+    //
+
+    $message-&gt;attach($pathToFile);
+});</code></pre>
+<p>附加文件至消息时，你也可以传递<code>数组</code>给 <code>attach</code> 方法作为第二个参数，以指定显示名称和／或 MIME 类型：</p>
+<pre><code>$message-&gt;attach($pathToFile, ['as' =&gt; $display, 'mime' =&gt; $mime]);</code></pre>
+<p><a name="inline-attachments"></a></p>
+<h3>内部附件</h3>
+<h4>在电子邮件视图中嵌入图片</h4>
+<p>在电子邮件中嵌入内部图片通常是件很麻烦的事；然而 Laravel 提供了一个便利的方法，让你在电子邮件中附加图片并获取适当的 CID。要嵌入内部图片，可在电子邮件视图的 <code>$message</code> 变量中使用 <code>embed</code> 方法。请记得，Laravel 会自动让你所有的电子邮件视图都能获取到 <code>$message</code> 变量：</p>
+<pre><code>&lt;body&gt;
+    这是一张图片：
+
+    &lt;img src="&lt;?php echo $message-&gt;embed($pathToFile); ?&gt;"&gt;
+&lt;/body&gt;</code></pre>
+<h4>在电子邮件视图中嵌入原始数据</h4>
+<p>若你已有想嵌入电子邮件消息中的原始数据字符串，则可以在 <code>$message</code> 变量上使用 <code>embedData</code> 方法：</p>
+<pre><code>&lt;body&gt;
+    这是一张从原始数据来的图片：
+
+    &lt;img src="&lt;?php echo $message-&gt;embedData($data, $name); ?&gt;"&gt;
+&lt;/body&gt;</code></pre>
+<p><a name="queueing-mail"></a></p>
+<h3>队列邮件</h3>
+<h4>将邮件消息加入队列</h4>
+<p>由于发送电子邮件消息会大幅延长应用程序的响应时间，许多开发者都会选择将邮件消息加入队列并于后台发送。Laravel 使用其内置的 <a href="queues.htm" tppabs="http://laravel-china.org/docs/5.1/queues">统一的队列 API</a> 来让你轻松地完成此工作。要将邮件消息加入队列，使用 <code>Mail</code> facade 的 <code>queue</code> 方法：</p>
+<pre><code>Mail::queue('emails.welcome', $data, function ($message) {
+    //
+});</code></pre>
+<p>此方法会自动将工作加入队列，以便在后台发送邮件消息。当然，在使用此功能之前，你需要 <a href="queues.htm" tppabs="http://laravel-china.org/docs/5.1/queues">设置你的队列</a>。</p>
+<h4>延迟的消息队列</h4>
+<p>若你希望延迟发送已加入队列的电子邮件消息，则可以使用 <code>later</code> 方法。若要开始使用，只需将你想要延迟发送消息的秒数作为第一个参数发送给此方法即可：</p>
+<pre><code>Mail::later(5, 'emails.welcome', $data, function ($message) {
+    //
+});</code></pre>
+<h4>加入特定队列</h4>
+<p>若你想要指定特定的队列来加入消息 ，可使用 <code>queueOn</code> 及 <code>laterOn</code> 方法：</p>
+<pre><code>Mail::queueOn('queue-name', 'emails.welcome', $data, function ($message) {
+    //
+});
+
+Mail::laterOn('queue-name', 5, 'emails.welcome', $data, function ($message) {
+    //
+});</code></pre>
+<p><a name="mail-and-local-development"></a></p>
+<h2>邮件与本地开发</h2>
+<p>当开发需要发送电子邮件的应用程序时，你有可能不想要实际发送电子邮件到真正的邮件地址上。Laravel 提供了几种方法以「阻止」将电子邮件消息真正发出。</p>
+<h4>日志驱动</h4>
+<p>一个解决方案是在本地开发时使用 <code>log</code> 邮件驱动。此驱动会将所有的电子邮件消息写入日志文件作为检验。若需要更多根据环境来设置应用程序的信息，可参考 <a href="installation.htm#environment-configuration" tppabs="http://laravel-china.org/docs/5.1/installation#environment-configuration">设置文档</a>。</p>
+<h4>通用收件者</h4>
+<p>另一个由 Lavavel 提供的解决方案，是设置一个通用的收件者给框架发出的所有电子邮件。这样，应用程序生成的所有电子邮件都会被送到一个特定的地址，而不是寄信时实际指定的收件人地址。这可以通过 <code>config/mail.php</code> 配置文件的 <code>to</code> 选项来完成：</p>
+<pre><code>'to' =&gt; [
+    'address' =&gt; 'dev@domain.com',
+    'name' =&gt; 'Dev Example'
+],</code></pre>
+<h4>Mailtrap</h4>
+<p>最后，你可以使用像 <a href="javascript:if(confirm('https://mailtrap.io/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://mailtrap.io/'" tppabs="https://mailtrap.io/">Mailtrap</a> 这样的服务以及 <code>smtp</code> 驱动来将你的邮件消息发到一个「假的」邮箱上，而你却可以在一个真实的邮件客户端上查看它们。这个方法的好处是让你可以在 Mailtrap 的消息阅读器中查看最终的实际电子邮件。</p>
+<p><a name="events"></a></p>
+<h2>事件</h2>
+<p>Laravel 会在发送邮件消息之前触发 <code>mailer.sending</code> 事件。切记，此事件只会在邮件 <strong>发送</strong> 时触发，在队列时则不会。你可以在你的 <code>EventServiceProvider</code> 注册一个事件侦听器：</p>
+<pre><code>/**
+ * 注册你应用程序中的其它事件。
+ *
+ * @param  \Illuminate\Contracts\Events\Dispatcher  $events
+ * @return void
+ */
+public function boot(DispatcherContract $events)
+{
+    parent::boot($events);
+
+    $events-&gt;listen('mailer.sending', function ($message) {
+        //
+    });
+}</code></pre>
+		</div>
+
+		<div class="main-footer" style="border-top:1px dashed rgba(0, 0, 0, 0.1);padding-top: 30px;margin-top:30px;margin-bottom: 20px;">
+			<div class="prev-next-wrap clearfix">
+
+									<a class="btn btn-default pull-left" href="localization.htm" tppabs="http://laravel-china.org/docs/5.1/localization"><i class="fa fa-arrow-left"></i> 本地化</a>
+				
+			    &nbsp;
+								    <a class="btn btn-default pull-right" href="packages.htm" tppabs="http://laravel-china.org/docs/5.1/packages">扩展包开发 <i class="fa fa-arrow-right"></i></a>
+							</div>
+		</div>
+
+	</article>
+
+
+</div>
+
+<br><br>
+<div class="container banner">
+    <div class="banner-container rbs row">
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://cloud.githubusercontent.com/assets/324764/16890184/c5576a68-4b1e-11e6-85cd-5f47d099a746.png);margin-top: 6px;"></span></p>
+                    <p class="caption">PHP & Laravel 社区</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://phphub.org/categories/1  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/categories/1'" tppabs="https://phphub.org/categories/1" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/0wgbAVabZB9GA2yaU8AY.png)"></span></p>
+                    <p class="caption">Laravel 酷工作</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/YCkIqPrz6v8MV0keu4pW.png)"></span></p>
+                    <p class="caption">Laravel 速查表</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://psr.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://psr.phphub.org/'" tppabs="https://psr.phphub.org/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/0pyH7UgXhF7PTBkLZRak.png)"></span></p>
+                    <p class="caption">PSR PHP 标准规范</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('http://laravel-china.org/api/5.1/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/api/5.1/'" tppabs="http://laravel-china.org/api/5.1/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/EptWCkT1qDDvtn5nV2id.png)"></span></p>
+                    <p class="caption">Laravel API 文档</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('http://laravel-china.github.io/php-the-right-way/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.github.io/php-the-right-way/'" tppabs="http://laravel-china.github.io/php-the-right-way/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/HCNo4rSRxIpK12yDL13U.png)"></span></p>
+                    <p class="caption">新手入门 PHP 之道</p>
+                </a>
+            </div>
+        </div>
+                </div>
+
+</div>
+
+
+
+		<footer class="main">
+
+			
+			<ul>
+				<li class="nav-docs"><a href="javascript:if(confirm('http://laravel-china.org/docs  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/docs'" tppabs="http://laravel-china.org/docs">文档</a></li>
+<li class="nav-laracasts"><a href="javascript:if(confirm('https://laracasts.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://laracasts.com/'" tppabs="https://laracasts.com/" target="_blank">Laracasts</a></li>
+<li class="nav-docs"><a href="javascript:if(confirm('http://lumen.laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://lumen.laravel-china.org/'" tppabs="http://lumen.laravel-china.org/">Lumen</a></li>
+<li class="nav-forge"><a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">Laravel LTS 速查表</a></li>
+<li class="dropdown">
+	<a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">Laravel 社区</a>
+</li>
+			</ul>
+			<p>Laravel is a trademark of Taylor Otwell. Copyright &copy; Taylor Otwell.</p>
+			<p class="less-significant"><a href="javascript:if(confirm('http://jackmcdade.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://jackmcdade.com/'" tppabs="http://jackmcdade.com/">Design by Jack McDade</a></p>
+
+			<p class="less-significant">
+				<a href="javascript:if(confirm('http://www.ucloud.cn/?utm_source=zanzhu&utm_campaign=phphub&utm_medium=display&utm_content=yejiao&ytag=phphubyejiao  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.ucloud.cn/?utm_source=zanzhu&utm_campaign=phphub&utm_medium=display&utm_content=yejiao&ytag=phphubyejiao'" tppabs="http://www.ucloud.cn/?utm_source=zanzhu&utm_campaign=phphub&utm_medium=display&utm_content=yejiao&ytag=phphubyejiao" target="_blank">由 UCloud 赞助  <img src="dYfOYswiQY.png" tppabs="https://dn-phphub.qbox.me/uploads/images/201605/03/1/dYfOYswiQY.png" width="98" data-toggle="tooltip" data-placement="top" title="本站服务器由 UCloud 赞助"></a>.
+		      </p>
+		</footer>
+
+	</div>
+
+	<script src="laravel.js" tppabs="http://laravel-china.org/assets/js/laravel.js"></script>
+	<script src="viewport-units-buggyfill.js" tppabs="http://laravel-china.org/assets/js/viewport-units-buggyfill.js"></script>
+	<script>window.viewportUnitsBuggyfill.init();</script>
+    <script>
+
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','analytics.js'/*tpa=http://7xijlf.com2.z0.glb.qiniucdn.com/js/analytics.js*/,'ga');
+
+		ga('create', 'UA-53903425-7', 'auto');
+		ga('send', 'pageview');
+
+		$(window).load(function() {
+		  // When the page has loaded
+		  $(".main-content").fadeIn(10);
+		});
+    </script>
+
+	
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    $( "#search-form" ).submit(function( event ) {
+        event.preventDefault();
+        window.open("https://www.bing.com/search?q=site:laravel-china.org/docs/5.1 " + $( "input[name='keyword']" ).val());
+    });
+    $("#search-btn").click(function(event) {
+        window.open("https://www.bing.com/search?q=site:laravel-china.org/docs/5.1 " + $( "input[name='keyword']" ).val());
+    });
+});
+
+</script>
+</body>
+</html>

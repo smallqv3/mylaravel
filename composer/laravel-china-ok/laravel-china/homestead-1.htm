@@ -1,0 +1,512 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Laravel 4.2 中文文档：Laravel Homestead
+</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="author" content="@summerblue">
+	<meta name="description" content="Laravel Homestead,介绍,内建软件,安装与设定,日常使用,端口,介绍,Laravel 致力于让 PHP 开发体验更愉快，也包含您的本地开发环境。vagrant 一个简单、优雅的方式来管理与供应虚拟机器。,Laravel Homestead 是一个官方预载的 Vagrant &ldquo;封装包&rdquo;，提供您一个完美的开发环境，不需要您在您的本机端安装 PHP、HHVM，网页服务器或任何服务器软件。...
+">
+	<meta name="keywords" content="Laravel Homestead,laravel4.2文档,laravel4.2中文文档,laravel中国,laravel中文,laravel框架中文,laravel文档,laravel框架中国,laravel中文文档
+">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--[if lte IE 9]>
+		<script src="html5shiv.min.js" tppabs="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="laravel.css" tppabs="http://laravel-china.org/assets/css/laravel.css">
+	<style media="screen">
+		div.main-content {
+		  display: none;
+		}
+		.loading-effect {
+			position: fixed;
+			left: 50%;
+			top:300px;
+		    z-index: -1;
+		}
+	</style>
+</head>
+<body class="docs language-php ">
+
+	<span class="overlay"></span>
+
+	<div class="loading-effect">
+		<div class="loader-inner line-scale">
+		      <div></div>
+		      <div></div>
+		      <div></div>
+		      <div></div>
+		      <div></div>
+		  </div>
+	</div>
+
+
+	<div class="main-content">
+
+		<nav class="main">
+			<div class="container">
+				<a href="javascript:if(confirm('http://laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/'" tppabs="http://laravel-china.org/" class="brand">
+					<img src="laravel-logo.png" tppabs="http://laravel-china.org/assets/img/laravel-logo.png" height="30">
+					Laravel
+				</a>
+
+				<div class="responsive-sidebar-nav">
+					<a href="#" class="toggle-slide menu-link btn">&#9776;</a>
+				</div>
+
+									<div class="switcher">
+	<div class="dropdown">
+		<button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			<!--<span class="faint">v</span> -->
+			4.2
+			<span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="homestead.htm" tppabs="http://laravel-china.org/docs/5.1/homestead">5.1</a>
+				</li>
+							<li role="presentation">
+					<a role="menuitem" tabindex="-1" href="homestead-1.htm" tppabs="http://laravel-china.org/docs/4.2/homestead">4.2</a>
+				</li>
+					</ul>
+	</div>
+</div>
+				
+				<ul class="main-nav">
+					<li class="nav-docs"><a href="javascript:if(confirm('http://laravel-china.org/docs  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/docs'" tppabs="http://laravel-china.org/docs">文档</a></li>
+<li class="nav-laracasts"><a href="javascript:if(confirm('https://laracasts.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://laracasts.com/'" tppabs="https://laracasts.com/" target="_blank">Laracasts</a></li>
+<li class="nav-docs"><a href="javascript:if(confirm('http://lumen.laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://lumen.laravel-china.org/'" tppabs="http://lumen.laravel-china.org/">Lumen</a></li>
+<li class="nav-forge"><a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">Laravel LTS 速查表</a></li>
+<li class="dropdown">
+	<a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">Laravel 社区</a>
+</li>
+				</ul>
+			</div>
+		</nav>
+
+		<nav id="slide-menu" class="slide-menu" role="navigation">
+
+	<div class="brand">
+		<a href="javascript:if(confirm('http://laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/'" tppabs="http://laravel-china.org/">
+			<img src="laravel-logo-white.png" tppabs="http://laravel-china.org/assets/img/laravel-logo-white.png" height="50">
+		</a>
+	</div>
+
+	<ul class="slide-main-nav">
+		<li><a href="javascript:if(confirm('http://laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/'" tppabs="http://laravel-china.org/">Home</a></li>
+		<li class="nav-docs"><a href="javascript:if(confirm('http://laravel-china.org/docs  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/docs'" tppabs="http://laravel-china.org/docs">文档</a></li>
+<li class="nav-laracasts"><a href="javascript:if(confirm('https://laracasts.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://laracasts.com/'" tppabs="https://laracasts.com/" target="_blank">Laracasts</a></li>
+<li class="nav-docs"><a href="javascript:if(confirm('http://lumen.laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://lumen.laravel-china.org/'" tppabs="http://lumen.laravel-china.org/">Lumen</a></li>
+<li class="nav-forge"><a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">Laravel LTS 速查表</a></li>
+<li class="dropdown">
+	<a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">Laravel 社区</a>
+</li>
+	</ul>
+
+	<div class="slide-docs-nav">
+		<h2>文档</h2>
+
+		<a type="button" class="turnofflight"><i class="fa fa-lightbulb-o"></i> 夜间模式 </a>
+		<br>
+		<a class="turnofflight" href="javascript:if(confirm('https://phphub.org/topics/2095  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/topics/2095'" tppabs="https://phphub.org/topics/2095"><i class="fa fa-bug"></i> 提交勘误 </a>
+		<ul>
+<li>前言
+<ul>
+<li><a href="introduction.htm" tppabs="http://laravel-china.org/docs/4.2/introduction">Laravel 介绍</a></li>
+<li><a href="quick.htm" tppabs="http://laravel-china.org/docs/4.2/quick">快速入门</a></li>
+<li><a href="releases-1.htm" tppabs="http://laravel-china.org/docs/4.2/releases">框架更新记录</a></li>
+<li><a href="upgrade-1.htm" tppabs="http://laravel-china.org/docs/4.2/upgrade">升级指南</a></li>
+</ul></li>
+<li>快速上手
+<ul>
+<li><a href="installation-1.htm" tppabs="http://laravel-china.org/docs/4.2/installation">安装文档</a></li>
+<li><a href="configuration.htm" tppabs="http://laravel-china.org/docs/4.2/configuration">配置信息</a></li>
+<li><a href="homestead-1.htm" tppabs="http://laravel-china.org/docs/4.2/homestead">Homestead</a></li>
+<li><a href="lifecycle-1.htm" tppabs="http://laravel-china.org/docs/4.2/lifecycle">程序的生命周期</a></li>
+<li><a href="routing-1.htm" tppabs="http://laravel-china.org/docs/4.2/routing">路由 Routing</a></li>
+<li><a href="requests-1.htm" tppabs="http://laravel-china.org/docs/4.2/requests">处理用户请求和输入</a></li>
+<li><a href="responses-1.htm" tppabs="http://laravel-china.org/docs/4.2/responses">视图和响应</a></li>
+<li><a href="controllers-1.htm" tppabs="http://laravel-china.org/docs/4.2/controllers">控制器</a></li>
+<li><a href="errors-1.htm" tppabs="http://laravel-china.org/docs/4.2/errors">错误和日志</a></li>
+</ul></li>
+<li>更多 Laravel 知识
+<ul>
+<li><a href="security.htm" tppabs="http://laravel-china.org/docs/4.2/security">身份认证功能</a></li>
+<li><a href="billing-1.htm" tppabs="http://laravel-china.org/docs/4.2/billing">收费系统</a></li>
+<li><a href="cache-1.htm" tppabs="http://laravel-china.org/docs/4.2/cache">缓存</a></li>
+<li><a href="extending.htm" tppabs="http://laravel-china.org/docs/4.2/extending">扩展框架</a></li>
+<li><a href="events-1.htm" tppabs="http://laravel-china.org/docs/4.2/events">事件</a></li>
+<li><a href="facades-1.htm" tppabs="http://laravel-china.org/docs/4.2/facades">Facades</a></li>
+<li><a href="html.htm" tppabs="http://laravel-china.org/docs/4.2/html">表单和HTML</a></li>
+<li><a href="helpers-1.htm" tppabs="http://laravel-china.org/docs/4.2/helpers">帮助函数</a></li>
+<li><a href="ioc.htm" tppabs="http://laravel-china.org/docs/4.2/ioc">IoC Container</a></li>
+<li><a href="localization-1.htm" tppabs="http://laravel-china.org/docs/4.2/localization">本地化</a></li>
+<li><a href="mail-1.htm" tppabs="http://laravel-china.org/docs/4.2/mail">邮件发送 Mail</a></li>
+<li><a href="packages-1.htm" tppabs="http://laravel-china.org/docs/4.2/packages">扩展包开发</a></li>
+<li><a href="pagination-1.htm" tppabs="http://laravel-china.org/docs/4.2/pagination">分页功能</a></li>
+<li><a href="queues-1.htm" tppabs="http://laravel-china.org/docs/4.2/queues">队列</a></li>
+<li><a href="security.htm" tppabs="http://laravel-china.org/docs/4.2/security">安全</a></li>
+<li><a href="session-1.htm" tppabs="http://laravel-china.org/docs/4.2/session">会话</a></li>
+<li><a href="ssh.htm" tppabs="http://laravel-china.org/docs/4.2/ssh">远程连接模块 SSH</a></li>
+<li><a href="templates.htm" tppabs="http://laravel-china.org/docs/4.2/templates">模版引擎</a></li>
+<li><a href="testing-1.htm" tppabs="http://laravel-china.org/docs/4.2/testing">单元测试</a></li>
+<li><a href="validation-1.htm" tppabs="http://laravel-china.org/docs/4.2/validation">表单验证</a></li>
+</ul></li>
+<li>数据库 Database
+<ul>
+<li><a href="database-1.htm" tppabs="http://laravel-china.org/docs/4.2/database">数据库简单使用</a></li>
+<li><a href="queries-1.htm" tppabs="http://laravel-china.org/docs/4.2/queries">查询构造器</a></li>
+<li><a href="eloquent-1.htm" tppabs="http://laravel-china.org/docs/4.2/eloquent">Eloquent ORM</a></li>
+<li><a href="schema.htm" tppabs="http://laravel-china.org/docs/4.2/schema">表结构构造器</a></li>
+<li><a href="migrations-1.htm" tppabs="http://laravel-china.org/docs/4.2/migrations">Migrations &amp; Seeding</a></li>
+<li><a href="redis-1.htm" tppabs="http://laravel-china.org/docs/4.2/redis">Redis</a></li>
+</ul></li>
+<li>命令行 Artisan CLI
+<ul>
+<li><a href="artisan-1.htm" tppabs="http://laravel-china.org/docs/4.2/artisan">命令行 Artisan 介绍</a></li>
+<li><a href="commands.htm" tppabs="http://laravel-china.org/docs/4.2/commands">开发 Artisan 命令</a></li>
+</ul></li>
+</ul>
+
+		<hr>
+		新手 QQ 群：579866868
+	</div>
+
+</nav>
+
+<div class="docs-wrapper container">
+
+	<section class="sidebar">
+
+		<div class="header">
+			<a type="button" class="btn btn-primary btn-lg btn-block turnofflight"><i class="fa fa-lightbulb-o"></i> 夜间模式 </a>
+			<a class="btn btn-primary btn-lg btn-block " href="javascript:if(confirm('https://phphub.org/topics/2095  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/topics/2095'" tppabs="https://phphub.org/topics/2095"><i class="fa fa-bug"></i> 提交勘误 </a>
+		</div>
+
+		<ul>
+<li>前言
+<ul>
+<li><a href="introduction.htm" tppabs="http://laravel-china.org/docs/4.2/introduction">Laravel 介绍</a></li>
+<li><a href="quick.htm" tppabs="http://laravel-china.org/docs/4.2/quick">快速入门</a></li>
+<li><a href="releases-1.htm" tppabs="http://laravel-china.org/docs/4.2/releases">框架更新记录</a></li>
+<li><a href="upgrade-1.htm" tppabs="http://laravel-china.org/docs/4.2/upgrade">升级指南</a></li>
+</ul></li>
+<li>快速上手
+<ul>
+<li><a href="installation-1.htm" tppabs="http://laravel-china.org/docs/4.2/installation">安装文档</a></li>
+<li><a href="configuration.htm" tppabs="http://laravel-china.org/docs/4.2/configuration">配置信息</a></li>
+<li><a href="homestead-1.htm" tppabs="http://laravel-china.org/docs/4.2/homestead">Homestead</a></li>
+<li><a href="lifecycle-1.htm" tppabs="http://laravel-china.org/docs/4.2/lifecycle">程序的生命周期</a></li>
+<li><a href="routing-1.htm" tppabs="http://laravel-china.org/docs/4.2/routing">路由 Routing</a></li>
+<li><a href="requests-1.htm" tppabs="http://laravel-china.org/docs/4.2/requests">处理用户请求和输入</a></li>
+<li><a href="responses-1.htm" tppabs="http://laravel-china.org/docs/4.2/responses">视图和响应</a></li>
+<li><a href="controllers-1.htm" tppabs="http://laravel-china.org/docs/4.2/controllers">控制器</a></li>
+<li><a href="errors-1.htm" tppabs="http://laravel-china.org/docs/4.2/errors">错误和日志</a></li>
+</ul></li>
+<li>更多 Laravel 知识
+<ul>
+<li><a href="security.htm" tppabs="http://laravel-china.org/docs/4.2/security">身份认证功能</a></li>
+<li><a href="billing-1.htm" tppabs="http://laravel-china.org/docs/4.2/billing">收费系统</a></li>
+<li><a href="cache-1.htm" tppabs="http://laravel-china.org/docs/4.2/cache">缓存</a></li>
+<li><a href="extending.htm" tppabs="http://laravel-china.org/docs/4.2/extending">扩展框架</a></li>
+<li><a href="events-1.htm" tppabs="http://laravel-china.org/docs/4.2/events">事件</a></li>
+<li><a href="facades-1.htm" tppabs="http://laravel-china.org/docs/4.2/facades">Facades</a></li>
+<li><a href="html.htm" tppabs="http://laravel-china.org/docs/4.2/html">表单和HTML</a></li>
+<li><a href="helpers-1.htm" tppabs="http://laravel-china.org/docs/4.2/helpers">帮助函数</a></li>
+<li><a href="ioc.htm" tppabs="http://laravel-china.org/docs/4.2/ioc">IoC Container</a></li>
+<li><a href="localization-1.htm" tppabs="http://laravel-china.org/docs/4.2/localization">本地化</a></li>
+<li><a href="mail-1.htm" tppabs="http://laravel-china.org/docs/4.2/mail">邮件发送 Mail</a></li>
+<li><a href="packages-1.htm" tppabs="http://laravel-china.org/docs/4.2/packages">扩展包开发</a></li>
+<li><a href="pagination-1.htm" tppabs="http://laravel-china.org/docs/4.2/pagination">分页功能</a></li>
+<li><a href="queues-1.htm" tppabs="http://laravel-china.org/docs/4.2/queues">队列</a></li>
+<li><a href="security.htm" tppabs="http://laravel-china.org/docs/4.2/security">安全</a></li>
+<li><a href="session-1.htm" tppabs="http://laravel-china.org/docs/4.2/session">会话</a></li>
+<li><a href="ssh.htm" tppabs="http://laravel-china.org/docs/4.2/ssh">远程连接模块 SSH</a></li>
+<li><a href="templates.htm" tppabs="http://laravel-china.org/docs/4.2/templates">模版引擎</a></li>
+<li><a href="testing-1.htm" tppabs="http://laravel-china.org/docs/4.2/testing">单元测试</a></li>
+<li><a href="validation-1.htm" tppabs="http://laravel-china.org/docs/4.2/validation">表单验证</a></li>
+</ul></li>
+<li>数据库 Database
+<ul>
+<li><a href="database-1.htm" tppabs="http://laravel-china.org/docs/4.2/database">数据库简单使用</a></li>
+<li><a href="queries-1.htm" tppabs="http://laravel-china.org/docs/4.2/queries">查询构造器</a></li>
+<li><a href="eloquent-1.htm" tppabs="http://laravel-china.org/docs/4.2/eloquent">Eloquent ORM</a></li>
+<li><a href="schema.htm" tppabs="http://laravel-china.org/docs/4.2/schema">表结构构造器</a></li>
+<li><a href="migrations-1.htm" tppabs="http://laravel-china.org/docs/4.2/migrations">Migrations &amp; Seeding</a></li>
+<li><a href="redis-1.htm" tppabs="http://laravel-china.org/docs/4.2/redis">Redis</a></li>
+</ul></li>
+<li>命令行 Artisan CLI
+<ul>
+<li><a href="artisan-1.htm" tppabs="http://laravel-china.org/docs/4.2/artisan">命令行 Artisan 介绍</a></li>
+<li><a href="commands.htm" tppabs="http://laravel-china.org/docs/4.2/commands">开发 Artisan 命令</a></li>
+</ul></li>
+</ul>
+
+		<hr>
+		新手 QQ 群：579866868
+	</section>
+
+	<article>
+
+		<div id="custom-search-input">
+			<form id="search-form" action="https://www.bing.com/search?q=site:laravel-china.org" method="get">
+				<div class="input-group col-md-12">
+					<input type="text" class="search-query form-control" name="keyword" placeholder="搜索关键词" />
+					<span class="input-group-btn">
+						<button class="btn btn-danger" type="button" id="search-btn">
+							<i class=" fa fa-search"></i>
+						</button>
+					</span>
+				</div>
+			</form>
+        </div>
+
+		<div class="alert alert-warning" role="alert">
+
+			<h4>拥抱 Laravel 5.1 LTS</h4>
+			<p>
+				强烈建议在 2018 年之前使用 Laravel 5.1 来构建项目，Laravel 5.1 是 LTS 的发行版本, 发行于 2015 年 6 月份，自发布起提供两年时间的 Bug 修复（2017 年 6 月）, 3 年时间的安全修复（2018 年 6 月）。
+			</p>
+			 <p>
+			 	LTS 版本是此项目能提供的最长时间维护版本。一般的发行版本, 只提供 6 个月的 Bug 修复支持, 一年的安全修复支持.
+			 </p>
+		</div>
+
+		<div class="main-content">
+			<h1>Laravel Homestead</h1>
+<ul>
+<li><a href="#introduction">介绍</a></li>
+<li><a href="#included-software">内建软件</a></li>
+<li><a href="#installation-and-setup">安装与设定</a></li>
+<li><a href="#daily-usage">日常使用</a></li>
+<li><a href="#ports">端口</a></li>
+</ul>
+<p><a name="introduction"></a></p>
+<h2>介绍</h2>
+<p>Laravel 致力于让 PHP 开发体验更愉快，也包含您的本地开发环境。<a href="javascript:if(confirm('http://vagrantup.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://vagrantup.com/'" tppabs="http://vagrantup.com/">vagrant</a> 一个简单、优雅的方式来管理与供应虚拟机器。</p>
+<p>Laravel Homestead 是一个官方预载的 Vagrant “封装包”，提供您一个完美的开发环境，不需要您在您的本机端安装 PHP、HHVM，网页服务器或任何服务器软件。不用担心搞乱您的系统！Vagrant 封装包完全搞定。如果有什么地方损坏了，您只要删掉重来即可。</p>
+<p>Homestead 可以在任何 Windows, Mac 或 Linux 上面运行，里面包含了 Nginx 网页服务器、PHP 5.6、MySQL、Postgres、Redis、Memcached 还有所有您开发 Laravel 应用程序所需的软件。</p>
+<blockquote>
+<p><strong>注意：</strong> 如果你使用的是 Windows，你可能需要开启硬件虚拟化 (VT-x)。通常可以在 BIOS 中开启。</p>
+</blockquote>
+<p>Homestead 创建且测试于 Vagrant 1.6 上。</p>
+<p><a name="included-software"></a></p>
+<h2>内建软件</h2>
+<ul>
+<li>Ubuntu 14.04</li>
+<li>PHP 5.6</li>
+<li>HHVM</li>
+<li>Nginx</li>
+<li>MySQL</li>
+<li>Postgres</li>
+<li>Node (With Bower, Grunt, and Gulp)</li>
+<li>Redis</li>
+<li>Memcached</li>
+<li>Beanstalkd</li>
+<li><a href="ssh.htm#envoy-task-runner" tppabs="http://laravel-china.org/docs/4.2/ssh#envoy-task-runner">Laravel Envoy</a></li>
+<li>Fabric + HipChat Extension</li>
+</ul>
+<p><a name="installation-and-setup"></a></p>
+<h2>安装与设定</h2>
+<h3>安装 VirtualBox 与 Vagrant</h3>
+<p>在启动您的 Homestead 环境之前，您必须先安装 <a href="javascript:if(confirm('https://www.virtualbox.org/wiki/Downloads  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://www.virtualbox.org/wiki/Downloads'" tppabs="https://www.virtualbox.org/wiki/Downloads">VirtualBox</a> 和 <a href="javascript:if(confirm('http://www.vagrantup.com/downloads.html  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.vagrantup.com/downloads.html'" tppabs="http://www.vagrantup.com/downloads.html">Vagrant</a>. 两套软件在各平台都有提供易用的视觉化安装软件。</p>
+<h3>增加 Vagrant 封装包</h3>
+<p>当 VirtualBox 和 Vagrant 安装完成后，您需要在终端机执行以下列命令将 'laravel/homestead' 封装包安装进您的 Vagrant 安装软件中。下载封装包会根据您的网速速度花费一点时间：</p>
+<pre><code>vagrant box add laravel/homestead</code></pre>
+<p>如果这个命令失败了, 你可能安装的是一个老版本的 Vagrant 需要指定一个完整的 URL：</p>
+<pre><code>vagrant box add laravel/homestead https://atlas.hashicorp.com/laravel/boxes/homestead</code></pre>
+<h3>安装 Homestead</h3>
+<h4>使用 Composer + PHP 工具</h4>
+<p>一旦封装包已经被加进您的 Vagrant 后，您就可以通过 composer 的 <code>global</code> 命令来安装 Homestead 命令行工具：</p>
+<pre><code>composer global require "laravel/homestead=~2.0"</code></pre>
+<p>确保 <code>~/.composer/vendor/bin</code> 目录已经写入 PATH 变量， 这样才可以在命令行下全局执行 <code>homestead</code> 命令。</p>
+<p>当您安装完 Homestead 的 命令行工具后, 可以通过使用 <code>init</code> 命令来创建 <code>Homestead.yaml</code> 配置文件。</p>
+<p>homestead init</p>
+<p>将会在 <code>~/.homestead</code> 目录中生成 <code>Homestead.yaml</code> 配置文件。如果你使用 Mac 或者 Linux 系统，你可以通过在命令行运行 <code>homestead edit</code> 命令来编辑 <code>Homestead.yaml</code> 文件。</p>
+<pre><code>homestead edit</code></pre>
+<h4>手动通过 Git (没有本地 PHP 环境)</h4>
+<p>如果你不想在本地机器上安装 PHP，你可以通过手动克隆仓库的方式来安装 Homestead。想象把克隆的仓库放到一个 <code>Homestead</code> 文件夹下，里面存放了你所有的 Laravel 项目，Homestead box 会把它当做你所有的 Laravel （或者 PHP）项目的文档根目录：</p>
+<pre><code>git clone https://github.com/laravel/homestead.git Homestead</code></pre>
+<p>当您安装完 Homestead 的 命令行工具后, 可以通过使用 <code>bash init.sh</code> 命令来创建 <code>Homestead.yaml</code> 配置文件：</p>
+<pre><code>bash init.sh</code></pre>
+<p>将会在 <code>~/.homestead</code> 目录中生成 <code>Homestead.yaml</code> 配置文件。</p>
+<h3>设定您的 SSH 密钥</h3>
+<p>接下来，您需要编辑下 <code>Homestead.yaml</code> 文件。您可以在文件中设定您的 SSH 公开密钥，以及您主要机器与 Homestead 虚拟机器之间的共享目录。</p>
+<p>如果没有 SSH 密钥 在 Mac 和 Linux 平台下，您可以利用下面的命令来创建一个 SSH 密钥:</p>
+<pre><code>ssh-keygen -t rsa -C "you@homestead"</code></pre>
+<p>在 Windows 下，您需要安装 <a href="javascript:if(confirm('http://git-scm.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://git-scm.com/'" tppabs="http://git-scm.com/">Git</a> 并且使用包含在 Git 里的 <code>Git Bash</code> 来执行上述的命令。另外您也可以使用 <a href="javascript:if(confirm('http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html'" tppabs="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTY</a> 和 <a href="javascript:if(confirm('http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html'" tppabs="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTYgen</a>。</p>
+<p>一旦您创建了一个 SSH 密钥，记得在您的 <code>Homestead.yaml</code> 文件中的 <code>authorize</code> 属性指明密钥路径。</p>
+<h3>设定您的共享文件夹</h3>
+<p><code>Homestead.yaml</code> 文件中的 <code>folders</code> 属性列出所有您想跟您的 Homestead 环境共享的文件夹列表。这些文件夹中的文件若有更动，他们将会同步在您的本机与 Homestead 环境里。您可以将您需要的共享文件夹都设定进去。</p>
+<h3>设定您的 Nginx 站点</h3>
+<p>对 Nginx 不熟悉? 没关系。<code>sites</code> 属性允许您简单的将一个 <code>域名</code> 对应到一个您在 homestead 环境中的目录。在 <code>Homestead.yaml</code> 文件中有默认一个简单的站点配置样例提您参考。同样的，您可以添加任何您需要的站点到您的 Homestead 环境中。Homestead 可以作为您开发项目时的一个方便的虚拟化环境。</p>
+<p>如果你的 Homestead 站点要使用 <a href="javascript:if(confirm('http://hhvm.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://hhvm.com/'" tppabs="http://hhvm.com/">HHVM</a> 只需将 <code>hhvm</code> 选项设置为 <code>true</code>：</p>
+<pre><code>sites:
+    - map: homestead.app
+      to: /home/vagrant/Code/Laravel/public
+      hhvm: true</code></pre>
+<h3>Bash Aliases</h3>
+<p>如果要增加 Bash aliases 到您的 Homestead 封装包中，只要加到 <code>~/.homestead</code> 目录根目录下的 <code>aliases</code> 文件中。</p>
+<h3>启动 Vagrant 封装包</h3>
+<p>当您根据您的情况编辑完 <code>Homestead.yaml</code> 后，在终端机里，从命令行执行 <code>homestead up</code> 命令。如果你是手动安装的 Homestead 并且没有使用 PHP 的 <code>homestead</code> 工具，进入包含克隆了 Homestead 的 Git 目录中执行 <code>vagrant up</code>。</p>
+<p>Vagrant 将会开启虚拟机，并且自动设定您的共享目录和 Nginx 站点。如果要删除虚拟机, 您可以使用 <code>homestead destroy</code> 命令，通过执行 <code>homestead list</code>， 您可以获取到完整的 homestead 命令列表。</p>
+<p>为了能访问您的 Nginx 站点，别忘记在本机的 <code>hosts</code> 文件中将&quot;域名&quot;加进去。<code>hosts</code> 文件会将您的本地网域的站点请求重定向跳转至您的 Homestead 环境中。在 Mac 和 Linux，该文件放在 <code>/etc/hosts</code>。在 Windows 环境中，它被放置在 <code>C:\Windows\System32\drivers\etc\hosts</code>。您要加进去的内容类似如下：</p>
+<pre><code>192.168.10.10  homestead.app</code></pre>
+<p>确保你添加的 IP 地址是设定在 <code>homestead.yaml</code> 文件中的那一个，一旦您将网址加进您的 <code>hosts</code> 文件中，您本机可以通过您的浏览器获取到您的站点。</p>
+<pre><code>http://homestead.app</code></pre>
+<p>继续读下去，您会学到如何链接到您的数据库。</p>
+<p><a name="daily-usage"></a></p>
+<h2>日常使用</h2>
+<h3>通过 SSH 连接</h3>
+<p>要通过 SSH 连接您的 Homestead 环境，在命令行执行 <code>homestead ssh</code> 即可。</p>
+<h3>连接您的数据库</h3>
+<p>在 <code>Homestead</code> 封装包中，MySQL 与 Postgres 两套数据库都已预装其中。为了更简便，Laravel 的 <code>local</code> 环境下的数据库配置已经默认设置为 <code>homestead</code> 。</p>
+<p>如果您想要从您的本机上通过 Navicat 或者是 Sequel Pro 连接您的 MySQL 或者 Postgres 数据库，您可以连接 <code>127.0.0.1</code> 的 端口 33060 (MySQL) 或 54320 (Postgres)。而帐号密码分别是 <code>homestead</code> / <code>secret</code>。</p>
+<blockquote>
+<p><strong>附注:</strong> 您应该使用这些非标准的端口从外部来链接到虚拟机里的数据库, 而在虚拟机里面使用默认的端口连接本地的服务, 如 3306 and 5432 .</p>
+</blockquote>
+<h3>增加更多的站点</h3>
+<p>一旦您的 Homestead 环境上架且运行后，您可能会需要为您的 Laravel 应用程序增加够多的 Nginx 站点。您可以在一台 Homestead 环境中运行非常多 Laravel 安装软件。可以通过如下两个方式：第一，可以在您的 <code>Homestead.yaml</code> 文件中增加站点然后执行 <code>vagrant provision</code>。</p>
+<p>另外，您也可以使用放在您的 Homestead 环境中的 <code>serve</code> 命令。您需要 SSH 进入您的 Homestead 环境中，并执行下列命令：</p>
+<pre><code>serve domain.app /home/vagrant/Code/path/to/public/directory</code></pre>
+<blockquote>
+<p><strong>附注:</strong> 在执行 <code>serve</code> 命令过后，别忘记将新的站点加进您本机的 <code>hosts</code> 文件中。</p>
+</blockquote>
+<p><a name="ports"></a></p>
+<h2>连接端口</h2>
+<p>以下的本地端口将会被重定向跳转至您的 Homestead 环境：</p>
+<ul>
+<li><strong>SSH:</strong> 2222 -&gt; Forwards To 22</li>
+<li><strong>HTTP:</strong> 8000 -&gt; Forwards To 80</li>
+<li><strong>MySQL:</strong> 33060 -&gt; Forwards To 3306</li>
+<li><strong>Postgres:</strong> 54320 -&gt; Forwards To 5432</li>
+</ul>
+		</div>
+
+		<div class="main-footer" style="border-top:1px dashed rgba(0, 0, 0, 0.1);padding-top: 30px;margin-top:30px;margin-bottom: 20px;">
+			<div class="prev-next-wrap clearfix">
+
+				
+			    &nbsp;
+							</div>
+		</div>
+
+	</article>
+
+
+</div>
+
+<br><br>
+<div class="container banner">
+    <div class="banner-container rbs row">
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://cloud.githubusercontent.com/assets/324764/16890184/c5576a68-4b1e-11e6-85cd-5f47d099a746.png);margin-top: 6px;"></span></p>
+                    <p class="caption">PHP & Laravel 社区</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://phphub.org/categories/1  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/categories/1'" tppabs="https://phphub.org/categories/1" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/0wgbAVabZB9GA2yaU8AY.png)"></span></p>
+                    <p class="caption">Laravel 酷工作</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/YCkIqPrz6v8MV0keu4pW.png)"></span></p>
+                    <p class="caption">Laravel 速查表</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('https://psr.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://psr.phphub.org/'" tppabs="https://psr.phphub.org/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/0pyH7UgXhF7PTBkLZRak.png)"></span></p>
+                    <p class="caption">PSR PHP 标准规范</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('http://laravel-china.org/api/5.1/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/api/5.1/'" tppabs="http://laravel-china.org/api/5.1/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/EptWCkT1qDDvtn5nV2id.png)"></span></p>
+                    <p class="caption">Laravel API 文档</p>
+                </a>
+            </div>
+        </div>
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+            <div class="item">
+                <a href="javascript:if(confirm('http://laravel-china.github.io/php-the-right-way/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.github.io/php-the-right-way/'" tppabs="http://laravel-china.github.io/php-the-right-way/" target="_blank">
+                    <p class="img"><span style="background-image:url(https://dn-phphub.qbox.me/uploads/banners/HCNo4rSRxIpK12yDL13U.png)"></span></p>
+                    <p class="caption">新手入门 PHP 之道</p>
+                </a>
+            </div>
+        </div>
+                </div>
+
+</div>
+
+
+
+		<footer class="main">
+
+			
+			<ul>
+				<li class="nav-docs"><a href="javascript:if(confirm('http://laravel-china.org/docs  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://laravel-china.org/docs'" tppabs="http://laravel-china.org/docs">文档</a></li>
+<li class="nav-laracasts"><a href="javascript:if(confirm('https://laracasts.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://laracasts.com/'" tppabs="https://laracasts.com/" target="_blank">Laracasts</a></li>
+<li class="nav-docs"><a href="javascript:if(confirm('http://lumen.laravel-china.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://lumen.laravel-china.org/'" tppabs="http://lumen.laravel-china.org/">Lumen</a></li>
+<li class="nav-forge"><a href="javascript:if(confirm('https://cs.phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://cs.phphub.org/'" tppabs="https://cs.phphub.org/" target="_blank">Laravel LTS 速查表</a></li>
+<li class="dropdown">
+	<a href="javascript:if(confirm('https://phphub.org/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��һ��ʹ��δ֧��Э��ĵ�ַ(����: gopher)��  \n\n����Ҫ�ӷ�����������?'))window.location='https://phphub.org/'" tppabs="https://phphub.org/" target="_blank">Laravel 社区</a>
+</li>
+			</ul>
+			<p>Laravel is a trademark of Taylor Otwell. Copyright &copy; Taylor Otwell.</p>
+			<p class="less-significant"><a href="javascript:if(confirm('http://jackmcdade.com/  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://jackmcdade.com/'" tppabs="http://jackmcdade.com/">Design by Jack McDade</a></p>
+
+			<p class="less-significant">
+				<a href="javascript:if(confirm('http://www.ucloud.cn/?utm_source=zanzhu&utm_campaign=phphub&utm_medium=display&utm_content=yejiao&ytag=phphubyejiao  \n\n���ļ�δ�� Teleport Pro ���أ���Ϊ ��λ����ʼ��ַ�����õı߽���������·���С�  \n\n����Ҫ�ӷ�����������?'))window.location='http://www.ucloud.cn/?utm_source=zanzhu&utm_campaign=phphub&utm_medium=display&utm_content=yejiao&ytag=phphubyejiao'" tppabs="http://www.ucloud.cn/?utm_source=zanzhu&utm_campaign=phphub&utm_medium=display&utm_content=yejiao&ytag=phphubyejiao" target="_blank">由 UCloud 赞助  <img src="dYfOYswiQY.png" tppabs="https://dn-phphub.qbox.me/uploads/images/201605/03/1/dYfOYswiQY.png" width="98" data-toggle="tooltip" data-placement="top" title="本站服务器由 UCloud 赞助"></a>.
+		      </p>
+		</footer>
+
+	</div>
+
+	<script src="laravel.js" tppabs="http://laravel-china.org/assets/js/laravel.js"></script>
+	<script src="viewport-units-buggyfill.js" tppabs="http://laravel-china.org/assets/js/viewport-units-buggyfill.js"></script>
+	<script>window.viewportUnitsBuggyfill.init();</script>
+    <script>
+
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','analytics.js'/*tpa=http://7xijlf.com2.z0.glb.qiniucdn.com/js/analytics.js*/,'ga');
+
+		ga('create', 'UA-53903425-7', 'auto');
+		ga('send', 'pageview');
+
+		$(window).load(function() {
+		  // When the page has loaded
+		  $(".main-content").fadeIn(10);
+		});
+    </script>
+
+	
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+    $( "#search-form" ).submit(function( event ) {
+        event.preventDefault();
+        window.open("https://www.bing.com/search?q=site:laravel-china.org/docs/4.2 " + $( "input[name='keyword']" ).val());
+    });
+    $("#search-btn").click(function(event) {
+        window.open("https://www.bing.com/search?q=site:laravel-china.org/docs/4.2 " + $( "input[name='keyword']" ).val());
+    });
+});
+
+</script>
+</body>
+</html>
