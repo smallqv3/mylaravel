@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -244,5 +245,116 @@ class UserController extends Controller
     		'username'=>'xdl',
     		'page'=>'<a href="/1.html">1</a><a href="/2.html">2</a><a href="/3.html">3</a>',
     		]); 
+    }
+
+    /**
+     * 
+     */
+    public function page()
+    {
+    	// 解析模板
+    	return view('page.index', ['title'=>'首页']);
+    }
+
+    /**
+     * 
+     */
+    public function cart()
+    {
+    	return view('page.cart', ['title'=>'购物车']);
+    }
+
+    /**
+     * 
+     */
+    public function layout()
+    {
+    	return view('layout.index');
+    }
+    /**
+     * 
+     */
+    public function extend()
+    {
+    	return view('layout.extend');
+    }
+    /**
+     * 
+     */
+    public function liucheng()
+    {
+    	return view('controlle.liucheng', ['total'=>200, 'money'=>9, 'sex'=>0]);
+    }
+    /**
+     * 
+     */
+    public function xunhuan()
+    {
+    	return view('controlle.xunhuan', [
+    		'user' => [
+    			['name'=>'高洛峰', 'age'=>'18', 'height'=>'175cm', 'weight'=>'70kg'],
+    			['name'=>'张涛', 'age'=>'19', 'height'=>'172cm', 'weight'=>'65kg'],
+    			['name'=>'海静', 'age'=>'20', 'height'=>'170cm', 'weight'=>'65kg'],
+    		],
+    	]);
+    }
+
+    /**
+     * 数据库操作
+     */
+    public function db()
+    {
+
+    	// 查询
+    	// $res = DB::select("select * from xq_about where id < 9");
+    	// $res = DB::select('select * from xq_about where id = ?', [1]); // pdo中的预处理操作
+    	// $res =DB::table('about')->get(); // 检索表中的所有行
+
+    	// 插入
+    	// $res = DB::insert('insert into xq_link (id, url, name, time) values("1", "nuker.top", "nuker", "1")');
+    	// $res = DB::insert('insert into xq_link (url, name, time) values(?, ?, ?)', ['ruke.xyz', 'ruke', '1']);
+    	// $res = DB::insert('insert into test (acc, username, password) values(?, ?, ?)', ['100000', 'xiaohigh', 'xiaohigh']);
+    	// $res = DB::insert('insert into test (acc, username, password) values(?, ?, ?)', ['10000', 'smallqnuker', 'smallqnuker']);
+
+    	// 修改
+    	// $res = DB::update('update xq_link set time = "1" where id = 1');
+    	// $res = DB::update('update xq_link set time = ? where id = ?', ['111', '1']);
+
+    	// 删除
+    	// $res = DB::delete("delete from xq_link where id = 2");
+    	// $res = DB::delete("delete from xq_link where id = ?", [1]);
+
+    	// 一般语句
+    	// $res = DB::statement("create table test (id int primary key auto_increment, name char(40))"); //创建表操作
+    	// $res = DB::statement("drop table test"); // 删除表操作
+    	// $res = DB::statement("truncate table xq_link"); // 清空表数据操作
+    	// $res = DB::statement("create table test (id int primary key auto_increment, username char(40), password char(40), acc int)");
+    	// $res = DB::statement("alter table test engine = innodb"); // 修改mysql表的存储引擎
+
+    	// 事物操作
+    	// 开启事务
+    	// DB::beginTransaction();
+    	// // 扣钱
+    	// $res = DB::update('update test set acc = acc - 2000 where id = 15');
+
+    	// // 加钱
+    	// $res2 = DB::update('update test set acc = acc + 2000 where id = 2');
+    	// // 判断两个结果集是否都成功执行
+    	// if($res && $res2){
+    	// 	// 事务提交
+    	// 	DB::commit();
+    	// 	echo "成功转账";
+    	// }else{
+    	// 	// 事务回滚
+    	// 	DB::rollback();
+    	// 	echo "转账失败";
+    	// }
+
+    	// 操作多个数据库:connection()括号中填写config/database.php中从库的键名名称
+    	// $res = DB::connection('slaver-1')->select(); // update delete insert
+
+
+    	echo '<pre>'; 
+    	print_r($res);
     }
 }

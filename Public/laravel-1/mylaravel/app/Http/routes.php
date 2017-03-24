@@ -11,9 +11,9 @@
 |
 */
 // 打印sql语句
-Event::listen('illuminate.query', function(){
-	print_r($query);
-});
+// Event::listen('illuminate.query', function(){
+// 	print_r($query);
+// });
 
 Route::get('/', function () {
     return view('welcome'); // 请求 / 根路径,指向welcome页面 
@@ -231,5 +231,24 @@ Route::get('/view', 'UserController@view');
 // blade的使用路由
 Route::get('/blade', 'UserController@blade');
 
+
+Route::get('/page', 'UserController@page');
+
+
+Route::get('/cart', 'UserController@cart');
+
+Route::get('/layout', 'UserController@layout');
+
+// 模板继承
+Route::get('/extend', 'UserController@extend');
+
+// 流程控制
+Route::get('/liucheng', 'UserController@liucheng');
+
+// 循环控制
+Route::get('/xunhuan', 'UserController@xunhuan');
+
+// 数据库操作
+Route::get('/db', 'UserController@db');
 
 ?>

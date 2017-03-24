@@ -274,6 +274,80 @@
 		显示html代码:{!!$name!!} <div id="pages">{!!$page!!}</div>
 
 		引入子视图:@include('header')
-		模板继承:
+
+		模板继承:(注:新模板中的标记()中的名称 必须和占位符中的标记()中的名称相同)
+			占位符: @yield('title') 单个占位(好比html中的单标签)
+
+					@section('content') 块状占位(好比html中的块状标签)
+						old contents is here(原来的父级模板内容)
+					@show
+			新模板内容: @extends('index')
+
+						@section('title', 'new Title')
+
+						@section('content')
+							new contents is here(现在继承父级模板之后 要修改原来内容成新内容)
+						@endsection
+			ps:在同一个占位符内再放一个内置占位符,不让最外层的占位符在新模板中显示,内置占位符才能生存,否则同时存在的话,外层的占位符会把内置的给覆盖掉,无法保证内置占位符的生存
+				@section('content')
+				<div style="height:400px;background:#acbdef">
+					@section('smallq')
+					@show
+				</div>
+				@show
+				<!-- @section('content')  外层
+				<div style="height:300px;background:cyan;"></div>
+				@endsection -->
+				@section('smallq')  内置
+				aaaaaaaaaaaaaaaa
+				@endsection
+
 		流程控制:
+			@if(count($records) === 1)
+				I have one record! (内容)
+			@elseif(count($records) > 1)
+				I have multiple records! (内容)
+			@else
+				I don't have any records! (内容)
+			@endif
+
 		循环控制:
+			@for($i = 0; $i < 10; $i++)
+				The current value is {{$i}} 输出结果
+			@endfor
+
+			@foreach($users as $user)
+				<p>this is user {{$user->id}}</p>
+			@endforeach
+
+22.数据库操作
+	支持的数据库类型:
+		MySQL
+		Postgres
+		SQLite
+		SQL Server
+
+	数据库连接配置:
+		文件位置:config/database.php
+
+		结果集的返回类型:'fetch'=>PDO::FETCH_ASSOC
+
+		.env环境快速配置
+
+	数据库基本操作:
+		查询:DB::select("sql语句写入");
+		插入:DB::insert
+		更新:DB::update
+		删除:DB::delete
+		一般语句:DB::statement('drop table users');
+		事物操作:
+			DB::beginTransaction(); // 开启事务操作
+			DB::rollBack(); // 事务回滚
+			DB::commit(); // 事务提交
+
+		操作多个数据库:DB::connection('foo')->select(.................);
+
+	构造器:
+		增删改查:
+		连贯操作:
+	sql语句记录:

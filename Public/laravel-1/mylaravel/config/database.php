@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'fetch' => PDO::FETCH_CLASS,
+    'fetch' => PDO::FETCH_CLASS, // 返回结果集类型设置PDO::FETCH_ASSOC
 
     /*
     |--------------------------------------------------------------------------
@@ -52,15 +52,28 @@ return [
             'prefix'   => '',
         ],
 
+        // 主库
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', 'localhost'),
+            'host'      => env('DB_HOST', 'localhost'), // env()函数:读取.env文件中的配置
             'database'  => env('DB_DATABASE', 'forge'),
             'username'  => env('DB_USERNAME', 'forge'),
             'password'  => env('DB_PASSWORD', ''),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
+            'prefix'    => 'xq_',
+            'strict'    => false,
+        ],
+        // 从库
+        'slaver-1' => [
+            'driver'    => 'mysql',
+            'host'      => env('DB_HOST', 'localhost'), // env()函数:读取.env文件中的配置
+            'database'  => env('DB_DATABASE', 'forge'),
+            'username'  => env('DB_USERNAME', 'forge'),
+            'password'  => env('DB_PASSWORD', ''),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => 'xq_',
             'strict'    => false,
         ],
 
