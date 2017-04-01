@@ -10,11 +10,12 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-// 打印sql语句
-// Event::listen('illuminate.query', function(){
-// 	print_r($query);
-// });
+// 打印sql语句(在此做一个事件或者sql操作监听)
+Event::listen('illuminate.query', function($query){
+	print_r($query);
+});
 
+// 每一个都是一个路由规则
 Route::get('/', function () {
     return view('welcome'); // 请求 / 根路径,指向welcome页面 
 });
@@ -250,5 +251,13 @@ Route::get('/xunhuan', 'UserController@xunhuan');
 
 // 数据库操作
 Route::get('/db', 'UserController@db');
+
+// 查询构造器
+Route::get('/builder', 'UserController@builder');
+
+Route::get('/func', 'UserController@test');
+
+// 模型的基本操作
+Route::get('/model', 'UserController@model');
 
 ?>

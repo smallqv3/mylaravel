@@ -145,6 +145,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+
+        Barryvdh\Debugbar\ServiceProvider::class, // laravel调试工具,类似tp中的调试工具
     ],
 
     /*

@@ -349,5 +349,210 @@
 
 	构造器:
 		增删改查:
+			插入:
+				单条:DB::table('users')->insert(['email'=>'xiaohigh@example.com', 'votes'=>0]);
+				多条:DB::table('users')->insert([
+					['email'=>'taylor@exmaple.com', 'votes'=>0],
+					['email'=>'taylor@example.com', 'votes'=>0]
+				]);
+				获取ID插入:$id = DB::table('users')->insertGetId(
+					['email'=>'xiaohigh@example.com', 'votes'=>0]
+				);
+			更新:
+				DB::table('users')->where('id', 1)->update(['votes'=>1]); // where('id', '=', 1)默认情况下是等于号
+			删除:
+				DB::table('users')->where('votes', '<', 100)->delete();
+
+			查询:
+				查询所有:DB::table('users')->get();
+				查询单条:DB::table('users')->first();
+				查询单条结果中的某个字段:DB::table('user')->value('username');
+				获取一列数据:DB::table('user')->lists('username');
+
 		连贯操作:
-	sql语句记录:
+			设置字段:DB::table('users')->select('name', 'smail as user_email')->get();
+			条件:
+				条件模糊查询:
+					DB::table('users')->where('name', 'like', 'T%')->get();
+				条件'或or'查询:只要满足其中一个条件的数据都会被查询显示
+					DB::table('users')->where('votes', '>', '100')->orWhere('name', 'Jhon')->get();
+				条件区间查询:
+					DB::table('users')->whereBetween('votes', [1, 100])->get();
+				条件ID在此区间的数据:
+					DB::table('users')->whereIn('id', [1, 2, 3])->get();
+
+			排序:orderBy('name', 'desc');
+			分页:skip()跳过几条数据,take()提取几条数据
+				DB::table('users')->skip(10)->take(5)->get();
+			连接表:随机修改:update xq_test set acc = ceil(rand() * 100000000);
+				DB::table('users')
+						->join('cpntacts', 'users.id', '=', 'contacts.user_id')
+						->join('orders', 'users.id', '=', 'orders.user_id')
+						->select('users.*', 'contacts.phone', 'orders.price')
+						->get();
+			计算:
+				总数:DB::table('users')->count();
+				最大值:DB::table('orders')->max('price');
+				平均值:DB::table('orders')->avg('price');
+
+	sql语句记录:打印sql语句(在此做一个事件或者sql操作监听)
+		Event::listen('illuminate.query', function($query){
+			var_dump($query);
+			print_r($query);
+		});
+
+23.数据库迁移(执行顺序:先执行down方法,在执行up方法进行迁移)
+	简单介绍:laravel框架管理数据库结构的一种方式
+
+	功能:为了实现数据库表结构的一个共享功能(laravel中的一个类似svn、git的脚本)
+		
+	使用:
+		创建类文件:
+			php 	artisan 		make:migration 		test
+			php命令	artisan文件		文件中的创建方法	自定义的数据库迁移文件名称(这里的文件创建也可以指定路径创建, 默认会创建在database/migrations目录下)
+
+		up方法:
+			创建表:Schema::create('users', function(Blueprint $table){});
+			创建表字段:
+				字段类型:
+					主键字段:
+						$table->increments('id');
+					字符串字段:
+						$table->string('username');
+					整型:
+						$table->integer('age');
+					浮点型:
+						$table->float('weight');
+					文本型:
+						$table->text('intro');
+					.........................
+				字段修饰:
+					nullable:用于设置字段内的值是否可为空值(类似于navicat中勾选是否是空)
+					default:用于设置字段默认值(类似于navicat中默认值设置)
+					unsigned
+					comment:用于字段说明(类似于navicat中字段注释)
+				索引:
+					主键:$table->primary('id');
+					一般索引:$table->index('password');
+					唯一索引:$table->unique('username');
+
+			设置引擎:
+				$table->engine = 'myisam';
+
+		down方法:
+			删除表:Schema::drop('users');
+
+		命令:
+			直接可让数据库迁移中的类方法进行执行(up方法):php artisan migrate
+			可让数据库迁移中的类方法执行更新操作(down方法):php artisan migrate:refresh
+
+		记录表结构的变化:
+			检测表是否存在:
+				Schema::hasTable('gg');
+			检测表中的字段是否存在:
+				Schema::hasColumn('gg', 'pic'); // 两个参数:第一个是表名,第二个是字段名称
+			增加字段:
+				Schema::table('love', function($table){
+					$table->string('email');
+				});
+			修改字段:
+				$table->decimal('price', 10, 2)->change();
+				在操作之前,这里需要先安装一个包:composer require doctrine/dbal
+
+			删除字段:
+				$table->dropColumn('email');
+
+			索引操作:
+				检测索引:
+					public function hasIndex($table, $name){
+						$conn = Schema::getConnection();
+						$dbSchemaManager = $conn->getDoctrineSchemaManager();
+						$doctrineTable = $dbSchemaManager->listTableDetails($table);
+						return $doctrineTable->hasIndex($name);
+					}
+				创建:
+					主键:$table->primary('id');
+					一般索引:$table->index('password');
+					唯一索引:$table->unique('username');
+				删除:
+					$table->dropPrimary();
+					$table->dropUnique();
+					$table->dropIndex();
+
+24.数据填充
+	是laravel中的一个快速向数据插入测试数据的方法
+	使用:
+		套路一:
+			1.创建注入文件(文件默认在database/seed中)
+				php artisan make:seeder user
+			2.在文件中填写注入代码
+			3.运行指令:
+				php artisan db:seed --class=user
+
+		套路二:
+			1.创建注入文件
+			2.在文件中书协注入代码
+			3.在DatabaseSeeder文件中添加代码
+			4.运行指令php artisan db:seed
+
+25.设置自定义函数和自定义类文件
+	app/Library/helper.php app/Common/function.php(都只是自定义的实例)
+
+	在项目下的composer.json中添加信息
+	"autoload" : {
+		"classmap" : {
+			"database"
+		},
+		"psr-4" : {
+			"App\\" : "app/"
+		},
+		"files" : [
+			"app/Library/helper.php",
+			"app/Common/function.php",
+		]
+	},
+
+	让laravel框架根目录下的composer.json文件中autoload中添加信息生效:composer dump-auto
+
+26.调试工具
+	debugbar安装
+		composer require barryvdh/laravel-debugbar
+		在config/app.php里面的providers添加
+			Barryvdh\Debugbar\ServiceProvider::class
+
+	chrome插件(这里是需要烦请到谷歌的商店去安装插件)
+		postman插件:可以模拟接口请求、各类Http请求,并且会把请求的源代码进行返回
+
+27.laravel模型操作(创建之后的model文件默认在app目录下)
+	简介:
+		Laravel 的 Eloquent ORM 提供了漂亮、简洁的 ActiveRecord 实现来和数据库进行交互(ActiveRecord:映射)
+
+	创建模型:
+		创建模型实例:(模型文件默认存放的位置是在app目录下)
+			php artisan make:model Order
+		创建模型实例并自动帮我们创建一个数据库迁移文件:
+			php artisan make:model Order -m
+
+	模型限定:
+		模型所对应的默认的表名是在模型后面加s,如果模型名称后面有s,则表名跟模型名称同名
+		eg:
+			Order => orders
+			Goods => goods
+			Country => countries
+		主键字段:id
+		时间字段:created_at updated_at
+
+	属性设置:
+		设置操作的表名:public $table = "userinfos";
+
+		设置默认的时间字段:public $timestamps = false;
+		修改默认的主键名称:public $primaryKey = "uid";
+	数据操作:
+	关系:
+		class User extends Model
+		{
+			
+		}
+
+
+

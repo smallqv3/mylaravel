@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use DB;
+
+use App\Goods;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -354,7 +356,135 @@ class UserController extends Controller
     	// $res = DB::connection('slaver-1')->select(); // update delete insert
 
 
-    	echo '<pre>'; 
-    	print_r($res);
+    	// echo '<pre>'; 
+    	// print_r($res);
+    }
+
+    /**
+     * 查询构造器
+     */
+    public function builder()
+    {
+    	// 插入动作
+    	// $res = DB::table('test')->insert([
+    	// 	'acc'=>'1000000',
+    	// 	'username'=>'smallq',
+    	// 	'password'=>'smallq',
+    	// ]);
+
+    	// 多条插入
+    	// $res = DB::table('test')->insert([
+    	// 	['acc'=>10000, 'username'=>'xdl-北京', 'password'=>'xdl'],
+    	// 	['acc'=>20000, 'username'=>'xdl-天津', 'password'=>'xdl'],
+    	// 	['acc'=>30000, 'username'=>'xdl-上海', 'password'=>'xdl']
+    	// ]);
+
+    	// 插入并获取ID
+    	// $res = DB::table('test')->insertGetId([
+    	// 	'acc'=>40000, 'username'=>'xdl-深圳', 'password'=>'xdl'
+    	// 	]);
+
+    	// 更新操作
+    	// $res = DB::table('test')->where('id', '=', 1)->update(['acc'=>100000]);
+
+    	// 删除操作
+    	// $res = DB::table('test')->where('id', '>', 9)->delete();
+
+    	// 查询操作
+    	//  查询多条
+    	// $res = DB::table('test')->get();
+
+    	// 获取单条数据
+    	// $res = DB::table('test')->where('id', 7)->first();
+
+    	// 获取单个结果中的某个字段值
+    	// $res = DB::table('test')->value('acc');
+
+    	// 获取结果集中的某个字段的所有值
+    	// $res = DB::table('test')->lists('acc');
+
+    	// 设置字段查询(连贯操作)
+    	// $res = DB::table('test')->select('username', 'password')->get();
+
+    	// 设置where条件
+    	// $res = DB::table('test')->where('username', '=', 'smallq')->first();
+
+    	// orWhere
+    	// $res = DB::table('test')->where('id', '=', 2)->orWhere('username', '=', 'xdlruke')->get();
+
+    	// whereBetween
+    	// $res = DB::table('test')->whereBetween('id', [5, 10])->get();
+
+    	// whereIn
+    	// $res = DB::table('test')->whereIn('id', [7, 8, 9])->get();
+
+    	// 排序
+    	// $res = DB::table('test')->orderBy('id', 'desc')->get();
+
+    	// 分页
+    	// $res = DB::table('test')->skip(5)->take(1)->get();
+
+    	// 连接表的操作
+    	// $res = DB::table('column')
+    	// 	->leftJoin('article', 'column.id', '=', 'article.typeid')
+    	// 	->where('column.id', '<', 15)
+    	// 	->get();
+    	// 高级的join语法(闭包操作)
+    	// $res = DB::table('column')->join('article', function($join){
+    	// 	$join->on('column.id', '=', 'article.typeid')
+    	// 	->where('column.id', '<', '15');
+    	// })->get();
+
+    	// 运算
+    	//  统计
+    	// $res = DB::table('test')->where('id', '<', 9)->count();
+    	// 最大值
+    	// $res = DB::table('test')->max('acc');
+    	// 平均值
+    	// $res = DB::table('test')->avg('acc');
+
+    	// dd($res);
+    }
+
+    public function test()
+    {
+    	love();
+    }
+
+    public function model()
+    {
+    	// 数据添加
+    	// 创建模型对象
+    	// $goods = new \App\Goods;
+
+    	// // 添加
+    	// $goods->title = '兄弟连文化衫';
+    	// $goods->content = '最新款的兄弟连文化衫,很帅气哦!!!';
+    	// $goods->created_at = date('Y-m-d H:i:s');
+    	// $goods->updated_at = date('Y-m-d H:i:s');
+    	// $goods->save();
+
+    	// 读取
+    	// $info = \App\Goods::find(5);
+    	// 读取字段信息:
+    	// echo $info->title;
+    	// echo $info['title']; // ArrayAccess接口实现
+
+    	// 删除操作
+    	// $info = \App\Goods::find(5);
+    	// $info->delete();
+
+    	// 更新操作
+    	// $info = \App\Goods::find(9);
+    	// $info->title = '兄弟连菊花皂';
+    	// $info->content = '新款兄弟连菊花皂, 谁用谁知道!!!';
+    	// $info->save();
+
+    	// 查询构造器查询数据
+    	// DB::table('goods')->get();
+    	// 像使用查询构造器一样使用模型(最上面导入了goods类,可不写成\App\Goods::get())
+    	// $data = Goods::get();
+    	$data = Goods::orderBy('id', 'desc')->where('id', '>', 2)->skip('3')->take('4')->get();
+    	dd($data);
     }
 }
