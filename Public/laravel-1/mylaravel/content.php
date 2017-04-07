@@ -1,4 +1,5 @@
-1.路由
+1.路由(注:laravel安装:D:\phpStudy\WWW\class>composer create-project laravel/laravel laravelblog --prefer-dist "5.1.*")
+
 	路由:是将信息从源地址传递到目的地角色(扮演角色:迎客角色,在路由中进行请求匹配,匹配到了之后在进行分配 例子:
 																	店小二:路由
 																	客人吃饭:匹配请求
@@ -7,6 +8,18 @@
 			 Route::post('/insert',function(){});
 			 Route::put(................);
 			 Route::delete(...............);
+
+	为多重动作注册路由:
+		可响应指定的路由方式:match():
+			Route::match(['get', 'post'], '/', function(){
+				return "hello world";
+			});
+		可响应所有路由请求方式:any():
+			Route::any('foo', function(){
+				return "hello world";
+			});
+
+
 2.注意点:最后的分号一定不能丢
 	Route::get('/', function () {
 	    return view('welcome'); // 请求 / 根路径,指向welcome页面 
@@ -247,7 +260,7 @@
 					// },3000)
     	// 		</script>';
     mvc强哥说法:
-    	m层:专门对数据库进行操作,增删改查操作都交给模型层去做
+    	m层:专门对数据库进行操作,增删改查操作都交给模型层去做(再被C层调用时会被实例化成一个对象去使用)
     	c层:负责中间调度操作,可把我们的逻辑性代码放入控制层去做,比如if判断、权限验证
 		v层:把内容显示的元素放到视图中去完成,不同的页面的值是不一样的,通过分配不同的变量来显示不同的页面信息显示,负责页面宣传、显示的功能
 
@@ -520,7 +533,7 @@
 		在config/app.php里面的providers添加
 			Barryvdh\Debugbar\ServiceProvider::class
 
-	chrome插件(这里是需要烦请到谷歌的商店去安装插件)
+	chrome插件(这里是需要翻墙到谷歌的商店去安装插件)
 		postman插件:可以模拟接口请求、各类Http请求,并且会把请求的源代码进行返回
 
 27.laravel模型操作(创建之后的model文件默认在app目录下)
@@ -548,11 +561,88 @@
 		设置默认的时间字段:public $timestamps = false;
 		修改默认的主键名称:public $primaryKey = "uid";
 	数据操作:
-	关系:
+
+	关系:(M层被C层调用时会被实例化成一个对象去使用)
 		class User extends Model
 		{
-			
+			/**
+		     * 一对一的关系设置(关联模型)
+		     */
+		    public function userinfo()
+		    {
+		        return $this->hasOne('App\Userinfo', 'user_id'); // 第一个参数:关联类的位置路径 第二个参数:所对应的关联外键
+		    }
+
+		    /**
+		     * 属于关系创建
+		     */
+		    public function country()
+		    {
+		        return $this->belongsTo('App\Country', 'country_id');
+		    }
+
+		    /**
+		     * 一对多的关系设置
+		     */
+		    public function post()
+		    {
+
+		        return $this->hasMany('App\Post', 'user_id');
+		    }
+
+		    /**
+		     * 多对多的关系创建
+		     */
+		    public function group()
+		    {
+		        return $this->belongsToMany('App\Group', 'group_user', 'user_id', 'group_id'); // 第一个参数:关联类的位置路径 第二个参数:多对多关联表的中间表名称 第三个参数:本类在关联表里面的外键 第四个参数:中间表在关联表里面的外键
+		    }
 		}
+
+	视频播放:
+		videojs m3u8插件:
+			可使用video开源免费插件:videojs 支持流媒体m3u8,可把视频切割成一块一块去播放,类似优酷视频那样播放,再通过videojs一点一点去请求播放,
+		videojs ckplayer插件:
+			国产插件,也可支持流媒体播放
+		sewise player插件:
+			也可以支持流媒体播放
+
+	一对多写入
+
+    	$post = new Post(['title'=>'test_1', 'content'=>'atest_content_1']);
+    	$post = new Post;
+    	$post->title = 'test_1';
+    	$post->content = 'atest_content_1';
+
+    	$post->save();
+
+    	获取用户信息
+    	
+    	$user = User::find(1);
+
+    	$user->post()->save($post);
+
+
+    多对多的创建
+    	$user = User::find(2);
+
+    	$user->group()->attach(2); // attach()可进行新增数据的插入
+
+    	$group = Group::find(1);
+    	$user->group()->attach($group); // attach():括号中既可以放置一个id, 也可以放置一个模型对象, 之后就可以插入数据了
+
+    多对多关系的删除
+    	$user = User::find(2);
+
+    	$user->group()->detach(1); // detach():多对多关系删除函数
+    	$group = Group::find(1);
+    	$user->group()->detach($group);
+
+    数据同步(内置执行步骤:进行对应对象指向关联模型的删除操作,再进行数据插入操作)
+    	$user = User::find(2); // 对应对象(在User模型中进行了方法指向)
+    	$user->group()->sync([1, 2, 3, 4]); // 对应对象指向关联的模型内进行操作,group()是关联模型方法,sync():括号内填入需要同步的数据
+
+    	User::create(['username'=>'aaa', 'password'=>'aaaaaaaaaaaaaaaaa']); // 注:create():批量插入,会受到模型中fillable()属性或者guard()属性的限制=>fillable()允许括号中的字段插入数据,guard()禁止括号中的字段插入数据
 
 
 
