@@ -289,7 +289,7 @@
 		引入子视图:@include('header')
 
 		模板继承:(注:新模板中的标记()中的名称 必须和占位符中的标记()中的名称相同)
-			占位符: @yield('title') 单个占位(好比html中的单标签)
+			占位符: <a>@yield('title')</a> 单个占位(好比html中的单标签)
 
 					@section('content') 块状占位(好比html中的块状标签)
 						old contents is here(原来的父级模板内容)
@@ -457,7 +457,8 @@
 
 		命令:
 			直接可让数据库迁移中的类方法进行执行(up方法):php artisan migrate
-			可让数据库迁移中的类方法执行更新操作(down方法):php artisan migrate:refresh
+			可让数据库迁移中的类方法执行更新操作(down方法): php artisan migrate:refresh
+															php artisan migrate:refresh --seed(保留原有数据,更新新迁移注入的字段数据)
 
 		记录表结构的变化:
 			检测表是否存在:
@@ -643,6 +644,10 @@
     	$user->group()->sync([1, 2, 3, 4]); // 对应对象指向关联的模型内进行操作,group()是关联模型方法,sync():括号内填入需要同步的数据
 
     	User::create(['username'=>'aaa', 'password'=>'aaaaaaaaaaaaaaaaa']); // 注:create():批量插入,会受到模型中fillable()属性或者guard()属性的限制=>fillable()允许括号中的字段插入数据,guard()禁止括号中的字段插入数据
+
+
+
+28.ajax就是一个微型的http客户端
 
 
 

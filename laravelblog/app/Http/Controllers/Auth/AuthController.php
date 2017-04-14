@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+use Illuminate\Http\Request;
+
 class AuthController extends Controller
 {
     /*
@@ -61,5 +63,45 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+
+    // 用户成功认证 重定向到 /home URI
+    protected $redirectPath = '/dashboard';
+    // 用户认证失败 重定向到 /auth/login URI
+    protected $loginPath = '/login';
+
+
+    /**
+     * 登录页面
+     */
+    public function getLogin()
+    {
+        return view('admin.auth.login');
+    }
+    /**
+     * 注册页面
+     */
+    public function getRegister()
+    {
+        return view('admin.auth.register');
+    }
+    /**
+     * 登录操作
+     */
+    public function postLogin(Request $request)
+    {   
+        dd($request->all());
+    }
+
+
+    /**
+     * 注册操作
+     */
+    public function postRegister(Request $request)
+    {   
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user));
     }
 }

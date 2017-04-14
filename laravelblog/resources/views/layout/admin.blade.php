@@ -83,7 +83,8 @@
 <script type="text/javascript" src="{{asset('/admins/js/demo/demo.js')}}" ></script>
 <script type="text/javascript" src="{{asset('/admins/js/demo/demo.dashboard.js')}}" ></script>
 
-<title>MWS Admin - Dashboard</title>
+
+<title>@yield('title')</title>
 
 </head>
 
@@ -315,7 +316,7 @@
                     	<a href="#" class="mws-i-24 i-list">用户管理</a>
                         <ul class="closed">
                         	<li><a href="{{url('/user/add')}}" >用户添加</a></li>
-                        	<li><a href="{{url('/user')}}" >用户列表</a></li>
+                        	<li><a href="{{url('/user/index')}}" >用户列表</a></li>
                         </ul>
                     </li>
                 	
@@ -328,7 +329,13 @@
         
         	<!-- Inner Container Start -->
             <div class="container">
-
+                @if(session('info')) 
+                <div class="mws-form-message info" style="border-radius:5px;margin-bottom:10px;">
+                    {{session('info')}}
+                </div>
+                @endif
+                @section('content')
+                @show
             </div>
             <!-- Inner Container End -->
                        

@@ -143,7 +143,7 @@ class UserController extends Controller
     }
 
     /**
-     * 内存的演示
+     * 闪存的演示
      */
     public function flash()
     {

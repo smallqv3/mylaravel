@@ -22,3 +22,30 @@ Route::get('/', function () {
 
 // 后台路由规则
 Route::get('/admin', 'AdminController@index');
+// 认证路由...
+Route::get('/auth/login', 'Auth\AuthController@getLogin');
+Route::post('/auth/login', 'Auth\AuthController@postLogin');
+Route::get('/auth/logout', 'Auth\AuthController@getLogout');
+
+Auth::routes();
+// 注册路由...
+Route::get('/auth/register', 'Auth\AuthController@getRegister');
+Route::post('/auth/register', 'Auth\AuthController@postRegister');
+
+// 用户的添加
+Route::get('/user/add', 'UserController@add');
+
+// 用户的插入操作
+Route::post('/user/insert', 'UserController@insert');
+// 用户的显示
+Route::get('/user/index', 'UserController@index');
+
+Route::get('/user/edit/{id}', 'UserController@edit');
+
+Route::post('/user/update', 'UserController@update');
+
+
+Route::get('/user/delete/{id}', 'UserController@delete');
+// ajax测试
+Route::post('/ajax', 'UserController@ajax');
+Route::get('/html', 'UserController@html');
