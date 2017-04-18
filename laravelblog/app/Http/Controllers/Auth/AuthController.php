@@ -100,8 +100,12 @@ class AuthController extends Controller
      */
     public function postRegister(Request $request)
     {   
-        $this->validator($request->all())->validate();
+        // 获取传入注册请求的验证器
+        $this->validator($request->all())->validate(); 
+        // 实例化Reigstered类，这个类是用户认证的事件并监听
+        event(new Registered($user = $this->create($request->all())));
 
-        event(new Registered($user));
+        $this->guard()->login('user');
+        return $this->registered($request, $user) ?: redirect($this->redirectPath()); 
     }
 }

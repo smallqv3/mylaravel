@@ -11,9 +11,9 @@
 |
 */
 // 打印sql语句(在此做一个事件或者sql操作监听)
-Event::listen('illuminate.query', function($query){
-	print_r($query);
-});
+// Event::listen('illuminate.query', function($query){
+// 	print_r($query);
+// });
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,7 +27,6 @@ Route::get('/auth/login', 'Auth\AuthController@getLogin');
 Route::post('/auth/login', 'Auth\AuthController@postLogin');
 Route::get('/auth/logout', 'Auth\AuthController@getLogout');
 
-Auth::routes();
 // 注册路由...
 Route::get('/auth/register', 'Auth\AuthController@getRegister');
 Route::post('/auth/register', 'Auth\AuthController@postRegister');
@@ -49,3 +48,7 @@ Route::get('/user/delete/{id}', 'UserController@delete');
 // ajax测试
 Route::post('/ajax', 'UserController@ajax');
 Route::get('/html', 'UserController@html');
+
+// restful 控制器 一条规则顶七条
+Route::resource('cate', 'CatesController');
+

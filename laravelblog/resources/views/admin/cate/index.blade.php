@@ -26,18 +26,14 @@
 						<th title="Browser" class="sorting" role="columnheader" tabindex="0" aria-controls="DataTables_Table_1"
 						rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending"
 						style="width: 268px;">
-							用户名
+							分类名称
 						</th>
 						<th title="Platform(s)" class="sorting" role="columnheader" tabindex="0"
 						aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending"
 						style="width: 251px;">
-							邮箱
+							父级分类
 						</th>
-						<th title="Engine version" class="sorting" role="columnheader" tabindex="0"
-						aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending"
-						style="width: 167px;">
-							头像
-						</th>
+						
 						<th title="CSS grade" class="sorting" role="columnheader" tabindex="0"
 						aria-controls="DataTables_Table_1" rowspan="1" colspan="1" aria-label="CSS grade: activate to sort column ascending"
 						style="width: 131px;">
@@ -45,36 +41,51 @@
 						</th>
 					</tr>
 				</thead>
+
+
 				<style type="text/css">
+					.edit a{
+						float: left;
+						border: solid 1px #C9C9C9;
+						display: block;
+						width: 40px;
+						text-align: center;
+						line-height: 21px;
+						height: 21px;
+						text-decoration: none;
+						color: buttontext;
+						background-color: #EBEBEB;
+						border-radius: 2px;
+					}
 					.center a:hover{
 						color: white;
-						font-size: 18px;
+						background-color: #1C86EE;
 					}
-					.edit,.dele{
-						
+					.button{
+						margin-left: 5px;
 					}
 				</style>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					@foreach($users as $k => $v)
+					@foreach($cates as $k => $v)
 					<tr class="@if($k % 2 == 0) gradeA even @else gradeA odd @endif">
 						<td class="  sorting_1">
 							{{$v->id}}
 						</td>
 						<td class=" ">
-							{{$v->username}}
+							{{$v->name}}
 						</td>
 						<td class=" ">
-							{{$v->email}}
-						</td>
-						<td class="center ">
-							<img src="{{$v->profile}}" width="40" alt="">
+							{{getCateNameByCateId($v->pid)}}
 						</td>
 						
 						<td class="center">
-							<a href="/user/edit/{{$v->id}}"><span class="edit">修改</span></a> | 
-							<a href="/user/delete/{{$v->id}}"><span class="dele">删除</span></a>
+							<span class="edit"><a href="/cate/{{$v->id}}/edit">修改</a></span> 
+							<form action="/cate/{{$v->id}}" method="post">
+								{{csrf_field()}}
+								<input type="hidden" name="_method" value="DELETE">
+								<span class="dele"><button class="button">删除</button></span>
+							</form>
 						</td>
-						
 					</tr>
 					@endforeach
 					

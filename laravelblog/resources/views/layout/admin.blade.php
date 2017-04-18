@@ -313,10 +313,18 @@
             	<ul>
                 	
                 	<li>
-                    	<a href="#" class="mws-i-24 i-list">用户管理</a>
+                    	<a href="#" class="mws-i-24 i-list"> 用户管理</a>
                         <ul class="closed">
                         	<li><a href="{{url('/user/add')}}" >用户添加</a></li>
                         	<li><a href="{{url('/user/index')}}" >用户列表</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" class="mws-i-24 i-list"> 分类管理</a>
+                        <ul class="closed">
+                            <li><a href="{{url('/cate/create')}}" >分类添加</a></li>
+                            <li><a href="{{url('/cate')}}" >分类列表</a></li>
                         </ul>
                     </li>
                 	

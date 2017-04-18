@@ -103,11 +103,12 @@ class UserController extends Controller
         
 
         // return view('admin.user.index', ['users'=>$users, 'request'=>$request]); // 分配之后的前端分页操作:<!-- <div id="pages">{!! $users->appends($request->only['num', 'keyword'])->render() !!}</div> -->        
-
+        // 恢复被删除的软删除的模型实例
+        // $users = new User;
+        // $users->restore();
 
         // 数据查询
         $users = User::orderBy('id', 'desc')->get();
-        
         // 分配变量 解析模板
         return view('admin.user.index', ['users'=>$users]); // assign('users', $users); $this->display('index');
     }
@@ -165,13 +166,14 @@ class UserController extends Controller
     {
         // 创建模型
         $user = User::findOrFail($id);
+         
         // 读取用户的头像信息
         $profile = $user->profile;
         // 检测
         $path = '.'.$profile;
         if(file_exists($path)) {
             // 删除头像图片文件夹中头像信息
-            unlink($path); // $profile=>/Uploads/20170413/1492066135274929.jpg 如果不加点指明他的正确访问路径,'/'在系统中是被默认成根目录 
+            unlink($path); // $profile=>/Uploads/20170413/1492066135274929.jpg 如果不加点指明他的正确访问路径,'/'在服务系统中是被默认成根目录 
         }
        
         // 删除

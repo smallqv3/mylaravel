@@ -315,7 +315,7 @@
                     	<a href="#" class="mws-i-24 i-list">用户管理</a>
                         <ul class="closed">
                         	<li><a href="{{url('/user/add')}}" >用户添加</a></li>
-                        	<li><a href="{{url('/user')}}" >用户列表</a></li>
+                        	<li><a href="{{url('/user/index')}}" >用户列表</a></li>
                         </ul>
                     </li>
                 	

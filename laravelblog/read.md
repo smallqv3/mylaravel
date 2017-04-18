@@ -16,3 +16,28 @@
 14. 调整404页面
 
 15. 可以使用工具格式化html代码:	eg:http://www.sojson.com/jshtml.html
+
+16. 资源控制器
+
+17. sublime 安装 laravel artisan 插件
+18. 将代码回推 shift + tab
+
+19. 隐式控制器和restful控制器区别 (都是为了简化路由规则)
+	1. restful  1 = 7
+		隐式	1 = n
+	2. restful 控制器会自动帮我们生成方法名 更加简洁一些 隐式控制器则不会
+	3. 方法名 隐式控制器 需要在方法名前面添加 请求方法(get, post)
+20. 分类的规律
+	如果是顶级分类 则 pid 和 path都是0
+	如果不是顶级分类 则pid应该是父级分类的id, path应该是父级分类的path, 父级分类的id
+
+	分类显示按父子分类排序:select *,concat(path,',',id) as paths from cates order by paths; => concat()连接字符串
+
+21. ErrorException in 5aaf0ae1bb6f027141d96fe0e84b46e3 line 36: 这样的问题 解决方案
+	sublime 快捷键 ctrl + p 找文件		ctrl + g 定位行数
+
+22. 请求方法伪造
+	<form action="/foo/bar" method="POST">
+	    <input type="hidden" name="_method" value="PUT">
+	    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+	</form>

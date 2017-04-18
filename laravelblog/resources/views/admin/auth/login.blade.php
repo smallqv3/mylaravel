@@ -79,7 +79,7 @@
                     <div class="mws-form-row">
                         <input type="submit" value="登录" class="mws-button green mws-login-button" />
                     </div>
-                    <!-- <a href="/auth/register" class="auth">还没有账号进行登录,去注册</a> -->
+                    <a href="/auth/register" class="auth">还没有账号进行登录,去注册</a>
                 </form>
             </div>
         </div>
