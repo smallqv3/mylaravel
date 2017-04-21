@@ -6,7 +6,7 @@
 		<span class="mws-i-24 i-table-1">
 
 
-			用户列表
+			分类列表
 		</span>
 	</div>
 

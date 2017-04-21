@@ -19,6 +19,17 @@ class CatesController extends Controller
     public function index(Request $request)
     {
         // 读取分类 按照父子分类进行排序
+        $cates = self::getCates();
+        // 解析模板
+        return view('admin.cate.index', ['cates'=>$cates, 'request'=>$request]);
+    }
+
+    /**
+     * 获取所有的分类信息 并排序
+     */
+    public static function getCates()
+    {
+        // 读取分类 按照父子分类进行排序
         $cates = Cate::select(DB::raw('*, concat(path, "," ,id) as paths'))->orderBy('paths')->where('isdelete', 'like', '0')->get();
         // 遍历数组 调整分类的名称 laravel ====> |-----laravel
         foreach ($cates as $key => $value) {
@@ -27,9 +38,9 @@ class CatesController extends Controller
             $prefix = str_repeat('|-- ', $tmp);
             $value->name = $prefix . $value->name; // 重新赋值给name值
         }
-        // 解析模板
-        return view('admin.cate.index', ['cates'=>$cates, 'request'=>$request]);
-    }
+
+        return $cates;
+    } 
 
     /**
      * 显示一个表单用来创建分类

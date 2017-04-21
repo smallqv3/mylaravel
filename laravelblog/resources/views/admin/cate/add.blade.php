@@ -3,6 +3,8 @@
 @section('title', '分类添加');
 
 @section('content');
+
+    
 	<div class="mws-panel grid_8">
     	<div class="mws-panel-header">
         	<span class="mws-i-24 i-list">分类添加</span>
@@ -39,6 +41,7 @@
                             </select>
                         </div>
                     </div>
+
         		</div>
         		<div class="mws-button-row" style="text-align:left;">
         			{{csrf_field()}}

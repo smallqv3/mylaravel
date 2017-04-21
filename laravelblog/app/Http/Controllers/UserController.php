@@ -90,7 +90,7 @@ class UserController extends Controller
         // }
 
         // $users = User::orderBy('id', 'desc')
-        //         ->where(function($query) use ($request){ 
+        //         ->where(function($query) use ($request){
         //         // $query:laravel框架中自带的依赖注入变量 在一个函数内部使用php全局变量是没法直接去使用:再这匿名函数中用global实现不了全局,必须使用use ($request),这是语法限定
         //             // 获取关键字
         //             $keyword = $request->input('keyword');
@@ -100,9 +100,9 @@ class UserController extends Controller
         //             }
         //         })
         //         ->paginate($request->input('num', 10));
-        
 
-        // return view('admin.user.index', ['users'=>$users, 'request'=>$request]); // 分配之后的前端分页操作:<!-- <div id="pages">{!! $users->appends($request->only['num', 'keyword'])->render() !!}</div> -->        
+
+        // return view('admin.user.index', ['users'=>$users, 'request'=>$request]); // 分配之后的前端分页操作:<!-- <div id="pages">{!! $users->appends($request->only['num', 'keyword'])->render() !!}</div> -->
         // 恢复被删除的软删除的模型实例
         // $users = new User;
         // $users->restore();
@@ -119,7 +119,7 @@ class UserController extends Controller
      */
 
     public function edit($id)
-    {   
+    {
         // 读取用户的信息
         $user = User::findOrFail($id); // findOrFail():免去了对ID的检测动作,直接显示出检测之后的结果
         // 展现用户的信息
@@ -132,7 +132,7 @@ class UserController extends Controller
      * 用户的更新操作
      */
     public function update(Request $request)
-    {   
+    {
         // 读取用户的模型
         $user = User::findOrFail($request->input('id'));
         $user -> username = $request->input('username');
@@ -160,22 +160,22 @@ class UserController extends Controller
     }
 
     /**
-     * 
+     *
      */
     public function delete($id)
     {
         // 创建模型
         $user = User::findOrFail($id);
-         
+
         // 读取用户的头像信息
         $profile = $user->profile;
         // 检测
         $path = '.'.$profile;
         if(file_exists($path)) {
             // 删除头像图片文件夹中头像信息
-            unlink($path); // $profile=>/Uploads/20170413/1492066135274929.jpg 如果不加点指明他的正确访问路径,'/'在服务系统中是被默认成根目录 
+            unlink($path); // $profile=>/Uploads/20170413/1492066135274929.jpg 如果不加点指明他的正确访问路径,'/'在服务系统中是被默认成根目录
         }
-       
+
         // 删除
         if($user->delete()) {
             return back()->with('info', '成功删除');
@@ -188,7 +188,7 @@ class UserController extends Controller
     // public function ajax()
     // {
     //     return "this is ajax return";
-    // } 
+    // }
 
     // public function html()
     // {

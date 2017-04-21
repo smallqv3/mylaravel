@@ -18,37 +18,42 @@
 Route::get('/', function () {
     return view('welcome');
 });
+// 后台路由组规则
+Route::group(['middleware'=>'login'], function(){
+	// 后台路由规则
+	Route::get('/admin', 'AdminController@index');
 
 
-// 后台路由规则
-Route::get('/admin', 'AdminController@index');
-// 认证路由...
-Route::get('/auth/login', 'Auth\AuthController@getLogin');
-Route::post('/auth/login', 'Auth\AuthController@postLogin');
-Route::get('/auth/logout', 'Auth\AuthController@getLogout');
+	// 用户的添加
+	Route::get('/user/add', 'UserController@add');
 
-// 注册路由...
-Route::get('/auth/register', 'Auth\AuthController@getRegister');
-Route::post('/auth/register', 'Auth\AuthController@postRegister');
+	// 用户的插入操作
+	Route::post('/user/insert', 'UserController@insert');
+	// 用户的显示
+	Route::get('/user/index', 'UserController@index');
 
-// 用户的添加
-Route::get('/user/add', 'UserController@add');
+	Route::get('/user/edit/{id}', 'UserController@edit');
 
-// 用户的插入操作
-Route::post('/user/insert', 'UserController@insert');
-// 用户的显示
-Route::get('/user/index', 'UserController@index');
-
-Route::get('/user/edit/{id}', 'UserController@edit');
-
-Route::post('/user/update', 'UserController@update');
+	Route::post('/user/update', 'UserController@update');
 
 
-Route::get('/user/delete/{id}', 'UserController@delete');
-// ajax测试
-Route::post('/ajax', 'UserController@ajax');
-Route::get('/html', 'UserController@html');
+	Route::get('/user/delete/{id}', 'UserController@delete');
+	// ajax测试
+	Route::post('/ajax', 'UserController@ajax');
+	Route::get('/html', 'UserController@html');
 
-// restful 控制器 一条规则顶七条
-Route::resource('cate', 'CatesController');
+	// restful 控制器 一条规则顶七条 分类
+	Route::resource('cate', 'CatesController');
 
+	// 标签管理
+	Route::resource('tag', 'TagController');
+
+	// 文章管理
+	Route::resource('article', 'ArticleController');
+});
+
+
+// 登录的页面显示
+Route::get('/login', 'LoginController@login');
+Route::post('/login', 'LoginController@dologin');
+Route::get('/logout', 'LoginController@logout');

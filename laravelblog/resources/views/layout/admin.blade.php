@@ -269,21 +269,23 @@
             
             <!-- User Information and functions section -->
             <div id="mws-user-info" class="mws-inset">
-            
+                
+                <?php $user = \App\User::find(session('uid')); ?>
+
             	<!-- User Photo -->
             	<div id="mws-user-photo">
-                	<img src="{{asset('/admins/example/profile.jpg')}}"  alt="User Photo" />
+                	<img src="{{$user->profile}}"  alt="User Photo" />
                 </div>
                 
                 <!-- Username and Functions -->
                 <div id="mws-user-functions">
                     <div id="mws-username">
-                        Hello, John Doe
+                        Hello, {{$user->username}}
                     </div>
                     <ul>
                     	<li><a href="#">Profile</a></li>
-                        <li><a href="#">Change Password</a></li>
-                        <li><a href="index.html" >Logout</a></li>
+                        <li><a href="#">修改密码</a></li>
+                        <li><a href="/logout" >登出</a></li>
                     </ul>
                 </div>
             </div>
@@ -313,7 +315,7 @@
             	<ul>
                 	
                 	<li>
-                    	<a href="#" class="mws-i-24 i-list"> 用户管理</a>
+                    	<a href="#" class="mws-i-24 i-admin-user-2"> 用户管理</a>
                         <ul class="closed">
                         	<li><a href="{{url('/user/add')}}" >用户添加</a></li>
                         	<li><a href="{{url('/user/index')}}" >用户列表</a></li>
@@ -327,7 +329,23 @@
                             <li><a href="{{url('/cate')}}" >分类列表</a></li>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="#" class="mws-i-24 i-list"> 标签管理</a>
+                        <ul class="closed">
+                            <li><a href="{{url('/tag/create')}}" >标签添加</a></li>
+                            <li><a href="{{url('/tag')}}" >标签列表</a></li>
+                        </ul>
+                    </li>
                 	
+                    <li>
+                        <a href="#" class="mws-i-24 i-list"> 文章管理</a>
+                        <ul class="closed">
+                            <!-- post arc也有文章的意思 -->
+                            <li><a href="{{url('/article/create')}}" >文章添加</a></li>
+                            <li><a href="{{url('/article')}}" >文章列表</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>            
         </div>

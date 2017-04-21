@@ -597,6 +597,8 @@
 		    public function group()
 		    {
 		        return $this->belongsToMany('App\Group', 'group_user', 'user_id', 'group_id'); // 第一个参数:关联类的位置路径 第二个参数:多对多关联表的中间表名称 第三个参数:本类在关联表里面的外键 第四个参数:中间表在关联表里面的外键
+		        注:其中有潜规则:(实际就是按照字母顺序进行 p 在 t 的前面 eg:post_tag)
+		        	中间表的表命名是以相关联的两个模型数据表来依照字母顺序命名,并包含了表中的字段也可根据此规则进行
 		    }
 		}
 
