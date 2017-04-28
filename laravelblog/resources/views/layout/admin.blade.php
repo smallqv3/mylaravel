@@ -303,7 +303,7 @@
         <div id="mws-sidebar">
         
         	<!-- Searchbox -->
-        	<div id="mws-searchbox" class="mws-inset">
+        	<div id="mws-searchbox" class="mws-inset" style="margin:0 13px 10px 10px;">
             	<form action="http://www.malijuthemeshop.com/themes/mws-admin/1.5/typography.html">
                 	<input type="text" class="mws-search-input" />
                     <input type="submit" class="mws-search-submit" />

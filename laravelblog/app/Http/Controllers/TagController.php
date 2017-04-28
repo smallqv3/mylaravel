@@ -80,7 +80,11 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        //
+        // 读取当前标签文章内容 模型多对多
+        $tagspost = Tag::find($id)->post()->where('isdelete', '0')->orderBy('id', 'desc')->paginate(10);
+        $tagsshow = Tag::findOrFail($id);
+        // 前台文章标签页显示
+        return view('home.tag', ['tagspost'=>$tagspost, 'tagsshow'=>$tagsshow]);
     }
 
     /**

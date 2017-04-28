@@ -28,10 +28,11 @@ class UserController extends Controller
     {
         // 表单验证(第三个参数就是用来填写验证之后的错误信息)
         $this->validate($request, [
-            'username' => 'required|regex:/\w{8,20}/',
+            'username' => 'required|regex:/\w{8,20}/|unique:users|max:255', // unique:users => 验证用户名称唯一性,后面是对应的表名称
             'email' => 'required|email', // 验证邮箱
             'password' => 'same:repassword' // 验证密码
         ],[
+            'username.unique' => '用户名称已经存在',
             'username.required' => '用户名不能省略',
             'username.regex' => '用户名规则不正确 请填写8~20位字母数字下划线',
             'email.required' => '邮箱不能为空',

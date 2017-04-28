@@ -101,7 +101,10 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        // 读取文章的内容
+        $article = Post::findOrFail($id);
+        // 显示文章的内容
+        return view('home.detail', ['article'=>$article]);
     }
 
     /**
@@ -197,4 +200,25 @@ class ArticleController extends Controller
             return back()->with('info', '删除失败');
         }
     }
+
+    /**
+     * 前台文章列表页显示
+     */
+    public function lists(Request $request)
+    {
+        
+        // 读取文章的列表信息
+        $articles = Post::orderBy('id', 'desc')->where(function($query) use ($request){
+            // 获取关键字
+            $keyword = $request->input('keyword');
+            // 检测参数
+            if(!empty($keyword)) {
+                $query->where('title', 'like', '%'.$keyword.'%');
+            }
+            
+        })->orWhere('isdelete', '0')->paginate(10);
+        // 解析模板
+        return view('home.lists', ['articles'=>$articles, 'request'=>$request]);
+    }
+    
 }

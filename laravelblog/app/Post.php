@@ -23,4 +23,14 @@ class Post extends Model
     {
     	return $this->belongsTo('\App\Cate');
     }
+
+
+
+    /**
+     * post和user是属于关系   Eloquent 判断的默认外键名称参考自关联模型的方法名称,并会在方法名称后面加上 _id
+     */
+    public function user()
+    {
+        return $this->belongsTo('\App\User'); 
+    }
 }

@@ -14,10 +14,13 @@
 // Event::listen('illuminate.query', function($query){
 // 	print_r($query);
 // });
+// 首页显示
+Route::get('/', 'ArticleController@lists');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 // 后台路由组规则
 Route::group(['middleware'=>'login'], function(){
 	// 后台路由规则
@@ -57,3 +60,36 @@ Route::group(['middleware'=>'login'], function(){
 Route::get('/login', 'LoginController@login');
 Route::post('/login', 'LoginController@dologin');
 Route::get('/logout', 'LoginController@logout');
+
+// // 文章的详情显示页面
+// Route::get('/article/{id}.html', 'ArticleController@show'); // <li><a href="/article/{{$v->id}}.html" target="_blank">{{$v->title}}</a></li>
+
+
+// 文章的详情显示页面 get的第一个参数可改变路由规则:/article/{id}.html => http://noaa.xyz/article/1.html 	/{id}.html => http://noaa.xyz/1.html
+Route::get('/article/{id}.html', [
+	'uses' => 'ArticleController@show',
+	'as' => 'detail' // 使用别名的优势
+]); // <li><a href="{{route('detail', ['id'=>$v->id])}}" target="_blank">{{$v->title}}</a></li>
+
+// 首页显示
+Route::get('/article', 'ArticleController@lists');
+// 首页搜索
+Route::post('/article', 'ArticleController@lists');
+
+// 文章分类
+// Route::get('/cate/{id}.html', 'CatesController@show');
+// 文章分类
+Route::get('/cate/{id}.html', [
+	'uses' => 'CatesController@show',
+	'as' => 'cate'
+	]);
+
+
+// 文章标签
+// Route::get('/tag/{id}.html', 'TagController@show');
+
+// 文章标签
+Route::get('/tag/{id}.html', [
+	'uses' => 'TagController@show',
+	'as' => 'tag'
+	]);

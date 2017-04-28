@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Cate;
 
 use DB;
+use App\Post;
 class CatesController extends Controller
 {
     /**
@@ -30,7 +31,7 @@ class CatesController extends Controller
     public static function getCates()
     {
         // 读取分类 按照父子分类进行排序
-        $cates = Cate::select(DB::raw('*, concat(path, "," ,id) as paths'))->orderBy('paths')->where('isdelete', 'like', '0')->get();
+        $cates = Cate::select(DB::raw('*, concat(path, "," ,id) as paths'))->orderBy('paths')->where('isdelete', '0')->get();
         // 遍历数组 调整分类的名称 laravel ====> |-----laravel
         foreach ($cates as $key => $value) {
             // 判断当前的分类是几级分类
@@ -95,7 +96,13 @@ class CatesController extends Controller
      */
     public function show($id)
     {
-        //
+        // 读取当前分类文章内容 模型一对多
+        $catepost = Cate::find($id)->post()->where('isdelete', '0')->orderBy('id', 'desc')->paginate(10);
+
+        
+        $cateshow = Cate::findOrFail($id);
+        // 前台文章分类页显示
+        return view('home.cate', ['catepost'=>$catepost, 'cateshow'=>$cateshow]);
     }
 
     /**
