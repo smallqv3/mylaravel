@@ -208,7 +208,7 @@ class ArticleController extends Controller
     {
         
         // 读取文章的列表信息
-        $articles = Post::orderBy('id', 'desc')->where(function($query) use ($request){
+        $articles = Post::orderBy('id', 'desc')->where('isdelete', 0)->where(function($query) use ($request){
             // 获取关键字
             $keyword = $request->input('keyword');
             // 检测参数
@@ -216,9 +216,13 @@ class ArticleController extends Controller
                 $query->where('title', 'like', '%'.$keyword.'%');
             }
             
-        })->orWhere('isdelete', '0')->paginate(10);
+        })->paginate(10);
+        
         // 解析模板
         return view('home.lists', ['articles'=>$articles, 'request'=>$request]);
     }
+
+
+    
     
 }

@@ -72,7 +72,7 @@ Route::get('/article/{id}.html', [
 ]); // <li><a href="{{route('detail', ['id'=>$v->id])}}" target="_blank">{{$v->title}}</a></li>
 
 // 首页显示
-Route::get('/article', 'ArticleController@lists');
+// Route::get('/article', 'ArticleController@lists');
 // 首页搜索
 Route::post('/article', 'ArticleController@lists');
 
@@ -93,3 +93,11 @@ Route::get('/tag/{id}.html', [
 	'uses' => 'TagController@show',
 	'as' => 'tag'
 	]);
+
+// 文章发布者
+Route::get('/intro/{id}.html', 'UserController@intro');
+// 文章发布者
+// Route::get('/intro', [
+// 	'uses' => 'UserController@intro',
+// 	'as' => 'intro'
+// 	]);

@@ -16,47 +16,56 @@
 
 </head>
 
-<body style="background-color:#F8F8FF;">
-  <header style="position:fixed;left:293px;z-index:1000;margin:auto;text-align:center;border-bottom:solid 0px #cccccc;">
-    <div class="logo f_l">
+<body style="background-color:#F8F8FF;margin-top:-25px;">
+  <header style="position:fixed;z-index:1000;margin:auto;text-align:center;border-bottom:solid 0px #cccccc;padding-top:30px;background-color:white;width:100%;" class="floatfix">
+    <div class="logo f_l" style="margin-left:290px;">
 	   <a href="#">
 	      <img src="http://nuker.top/wp-content/themes/Cui2.0/Cui2.0/img/logo.png">
 	   </a>
 	 </div>
-
 	 <style type="text/css">
-	 #topnav ul a.select{
-		background-color: gold !important;
-	 }
-
-
-
-
-	 #topnav ul a:hover{
-		background-color: gold !important;
-	 }
+	 #topnav ul a.active{
+	 	background-color: gold !important;
+	 	color: black;
+	 }	 
 	 </style>
 
-	 <div id="topnav" class="f_r">
+	 <div id="topnav" class="f_r" style="width:40%;margin-right:290px;">
 	 	<?php $cates = \App\Cate::where('pid', '0')->where(function($query){
 	 			$query->where('isdelete', '0');
 	 		})->get();?>
 	     <ul>
-		     <a href="/" target="_self" class="active" id="topnav_current">首页</a>
+		     <a href="/" target="_self" class="topnav" id="topnavcurrent" data-id="0">首页</a>
 		     @foreach($cates as $k => $v)
-			  <a href="{{route('cate', ['id'=>$v->id])}}" target="_self" class="active">{{$v->name}}</a>
+			  <a href="{{route('cate', ['id'=>$v->id])}}" target="_self" class="link" data-id="{{$v->id}}">{{$v->name}}</a>
 			 @endforeach			  
 		  </ul>
 	 </div>
   </header>
 
   <script type="text/javascript">
-  $(function(){
-  	$("#topnav").find("ul").find("a").on("click", function(){
-  		$(this).addClass("select").siblings().removeClass("select");  		
-  	})
+	  $(function(){
+	  	var href = location.href; // js获取url
+	  	hrefprev = href.split('/')[4]; // 以'/'为条件进行切割
+	  	if(hrefprev == null){
+	  		$('.topnav').addClass('active');
+	  	}else{
+	  		hrefnext = hrefprev.split('.')[0]; // 以'.'为条件进行切割取得url中的id
+	  		var active = $(".link");  	
+	  	
+		  	$.map(active, function(val){ // map() 把每个元素通过函数传递到当前匹配集合中，生成包含返回值的新的 jQuery 对象
+		  		if(hrefnext == $(val).data('id')){
+		  			$(val).addClass('active');
+		  			$('.topnav').removeClass('active');
+		  		}else{
+		  			$(val).removeClass('active');
+		  		}
+		  	})
+	  	}
+	  	
+		
 
-  });
+	  });
   </script>  
   <style type="text/css">
 	#center{
@@ -65,6 +74,7 @@
 
 
 		/*border: solid 1px #cccccc;*/
+		margin-top: 25px;
 	}
 	.floatfix{
 		content:"";
@@ -356,10 +366,21 @@
 	     width:100%;
 	     height:60px;   /* Height of the footer */
 	     background:#6cf;
-	     border-top: solid 1px #cccccc; 
+	     border-top: solid 1px #cccccc;
+	     line-height: 60px;
+	     text-align: center;
+	      
+	}
+	.copy p{
+		color: white;
+		font-size: 16px;
 	}
 </style>
-<div id="footer"></div>		
+<div id="footer">
+	<div class="copy">
+		<p>CopyRight © 攀爬菜小强 | 京ICP备17013291号</p>
+	</div>
+</div>		
   
 </body>
 </html>

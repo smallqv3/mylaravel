@@ -12,6 +12,8 @@ use App\User;
 
 use Hash;
 
+use App\Post;
+
 class UserController extends Controller
 {
     /**
@@ -195,4 +197,23 @@ class UserController extends Controller
     // {
     //     return view('mytextajax.html');
     // }
+
+
+    /**
+     * 前台发布者文章显示
+     */
+    public function intro($id)
+    {
+        
+        // 解密 获取ID
+        // $uid = base64_decode($id);
+        $uid = $id; 
+        // 创建模型
+        $posts = Post::where('isdelete', 0)->where(function($query) use ($uid){
+            $query->where('user_id', '=', $uid);
+        })->paginate(10);
+        
+        $userid = User::findOrFail($id);
+        return view('home.intro', ['posts'=>$posts, 'userid'=>$userid]);
+    }
 }
