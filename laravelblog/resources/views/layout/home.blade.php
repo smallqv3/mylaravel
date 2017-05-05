@@ -15,31 +15,59 @@
  <link rel="shortcut icon" href="{{asset('/home/muzhuangshow/images/favicon.ico')}}">
 
 </head>
-
+<style type="text/css">
+	.left{
+		width: 18.4%;
+		height: 100px;
+		background-color: #ddd;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.right{
+		width: 18.4%;
+		height: 100px;
+		background-color: #ddd;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+	.main{
+		margin: 0 18.4% 0 18.4%;
+	}
+</style>
 <body style="background-color:#F8F8FF;margin-top:-25px;">
-  <header style="position:fixed;z-index:1000;margin:auto;text-align:center;border-bottom:solid 0px #cccccc;padding-top:30px;background-color:white;width:100%;" class="floatfix">
-    <div class="logo f_l" style="margin-left:290px;">
-	   <a href="#">
-	      <img src="http://nuker.top/wp-content/themes/Cui2.0/Cui2.0/img/logo.png">
-	   </a>
-	 </div>
-	 <style type="text/css">
-	 #topnav ul a.active{
-	 	background-color: gold !important;
-	 	color: black;
-	 }	 
-	 </style>
+  <header style="position:fixed;z-index:1000;margin:0 auto;text-align:center;border-bottom:solid 0px #cccccc;padding-top:30px;background-color:white;width:100%;" class="floatfix">
+  	<div class="left"></div>
+  	<div class="main">
+	    <div class="logo f_l">
+		   <a href="#">
+		      <img src="http://nuker.top/wp-content/themes/Cui2.0/Cui2.0/img/logo.png">
+		   </a>
+		 </div>
+		 <style type="text/css">
+		 #topnav ul a.active{
+		 	background-color: gold !important;
 
-	 <div id="topnav" class="f_r" style="width:40%;margin-right:290px;">
-	 	<?php $cates = \App\Cate::where('pid', '0')->where(function($query){
-	 			$query->where('isdelete', '0');
-	 		})->get();?>
-	     <ul>
-		     <a href="/" target="_self" class="topnav" id="topnavcurrent" data-id="0">首页</a>
-		     @foreach($cates as $k => $v)
-			  <a href="{{route('cate', ['id'=>$v->id])}}" target="_self" class="link" data-id="{{$v->id}}">{{$v->name}}</a>
-			 @endforeach			  
-		  </ul>
+		 	color: black;
+		 }	 
+		 </style>
+
+		 <div id="topnav" class="f_r">
+		 	<?php $cates = \App\Cate::where('pid', '0')->where(function($query){
+		 			$query->where('isdelete', '0');
+		 		})->get();?>
+		     <ul>
+			     <a href="/" target="_self" class="topnav" id="topnavcurrent" data-id="0">首页</a>
+			     @foreach($cates as $k => $v)
+				  <a href="{{route('cate', ['id'=>$v->id])}}" target="_self" class="link" data-id="{{$v->id}}">{{$v->name}}</a>
+				 @endforeach			  
+			  </ul>
+		 </div>
+	 </div>
+	 <div class="right">
+	 	
+
 	 </div>
   </header>
 
@@ -82,6 +110,7 @@
 		clear: both;
 	}
   </style>
+
   <article style="padding:70px 0 0 0;">
   	<div id="center" class="floatfix">
   	@section('article')
